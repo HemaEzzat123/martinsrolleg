@@ -16,7 +16,7 @@ export const FranchiseForm = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-brand-charcoal p-8 md:p-10 rounded-3xl shadow-xl border border-amber-900/10 dark:border-white/10">
+    <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-amber-900/10">
       {submitted ? (
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -24,11 +24,11 @@ export const FranchiseForm = () => {
           className="text-center py-12"
         >
           <FiCheckCircle className="w-16 h-16 text-brand-gold mx-auto mb-4" />
-          <h3 className="text-2xl font-bold font-heading text-brand-dark dark:text-brand-cream">
+          <h3 className="text-2xl font-bold font-heading text-brand-dark">
             Franchise Application Received!
           </h3>
-          <p className="mt-2 text-gray-600 dark:text-gray-300 max-w-md mx-auto text-sm">
-            Thank you for your interest in investing with Martins Rolleg. Our franchise development director will review your details and connect within 3 business days.
+          <p className="mt-2 text-gray-600 max-w-md mx-auto text-sm">
+            Thank you for applying. Our franchise team will get back to you soon.
           </p>
         </motion.div>
       ) : (
@@ -37,31 +37,63 @@ export const FranchiseForm = () => {
             
             {/* Full Name */}
             <div>
-              <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
                 Full Name *
               </label>
               <input
                 type="text"
-                placeholder="Mohammad Al-Rashid"
+                placeholder="Your Full Name"
                 {...register('fullName', { required: 'Full name is required' })}
-                className={`w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-gray-800 text-brand-dark dark:text-brand-cream text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
-                  errors.fullName ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'
+                className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
+                  errors.fullName ? 'border-red-500' : 'border-gray-200'
                 }`}
               />
               {errors.fullName && <p className="mt-1 text-xs text-red-500">{errors.fullName.message}</p>}
             </div>
 
+            {/* Country */}
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
+                Country *
+              </label>
+              <input
+                type="text"
+                placeholder="Country"
+                {...register('country', { required: 'Country is required' })}
+                className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
+                  errors.country ? 'border-red-500' : 'border-gray-200'
+                }`}
+              />
+              {errors.country && <p className="mt-1 text-xs text-red-500">{errors.country.message}</p>}
+            </div>
+
+            {/* City */}
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
+                City *
+              </label>
+              <input
+                type="text"
+                placeholder="City"
+                {...register('city', { required: 'City is required' })}
+                className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
+                  errors.city ? 'border-red-500' : 'border-gray-200'
+                }`}
+              />
+              {errors.city && <p className="mt-1 text-xs text-red-500">{errors.city.message}</p>}
+            </div>
+
             {/* Phone */}
             <div>
-              <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
-                Phone Number *
+              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
+                Phone *
               </label>
               <input
                 type="tel"
-                placeholder="+966 50 123 4567"
-                {...register('phone', { required: 'Phone number is required' })}
-                className={`w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-gray-800 text-brand-dark dark:text-brand-cream text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
-                  errors.phone ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'
+                placeholder="Phone Number"
+                {...register('phone', { required: 'Phone is required' })}
+                className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
+                  errors.phone ? 'border-red-500' : 'border-gray-200'
                 }`}
               />
               {errors.phone && <p className="mt-1 text-xs text-red-500">{errors.phone.message}</p>}
@@ -69,104 +101,56 @@ export const FranchiseForm = () => {
 
             {/* Email */}
             <div>
-              <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
-                Email Address *
+              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
+                Email *
               </label>
               <input
                 type="email"
-                placeholder="investor@domain.com"
+                placeholder="Email Address"
                 {...register('email', { required: 'Email is required', pattern: /^\S+@\S+$/i })}
-                className={`w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-gray-800 text-brand-dark dark:text-brand-cream text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
-                  errors.email ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'
+                className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
+                  errors.email ? 'border-red-500' : 'border-gray-200'
                 }`}
               />
               {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email.message}</p>}
             </div>
 
-            {/* City */}
-            <div>
-              <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
-                Target City *
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. Riyadh, Kuwait City, Muscat"
-                {...register('city', { required: 'City is required' })}
-                className={`w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-gray-800 text-brand-dark dark:text-brand-cream text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
-                  errors.city ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'
-                }`}
-              />
-              {errors.city && <p className="mt-1 text-xs text-red-500">{errors.city.message}</p>}
-            </div>
-
-            {/* Country */}
-            <div>
-              <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
-                Country *
-              </label>
-              <input
-                type="text"
-                placeholder="Saudi Arabia, UAE, Qatar, Egypt..."
-                {...register('country', { required: 'Country is required' })}
-                className={`w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-gray-800 text-brand-dark dark:text-brand-cream text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
-                  errors.country ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'
-                }`}
-              />
-              {errors.country && <p className="mt-1 text-xs text-red-500">{errors.country.message}</p>}
-            </div>
-
             {/* Investment Budget */}
             <div>
-              <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
                 Investment Budget *
               </label>
-              <select
-                {...register('budget', { required: 'Investment budget selection is required' })}
-                className={`w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-gray-800 text-brand-dark dark:text-brand-cream text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
-                  errors.budget ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'
+              <input
+                type="text"
+                placeholder="Target Budget (e.g. $100k - $250k)"
+                {...register('investmentBudget', { required: 'Investment budget is required' })}
+                className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
+                  errors.investmentBudget ? 'border-red-500' : 'border-gray-200'
                 }`}
-              >
-                <option value="">Select Budget Range</option>
-                <option value="500k-1m">$500,000 - $1,000,000 USD</option>
-                <option value="1m-2.5m">$1,000,000 - $2,500,000 USD</option>
-                <option value="2.5m+">$2,500,000+ USD (Area Development)</option>
-              </select>
-              {errors.budget && <p className="mt-1 text-xs text-red-500">{errors.budget.message}</p>}
+              />
+              {errors.investmentBudget && <p className="mt-1 text-xs text-red-500">{errors.investmentBudget.message}</p>}
             </div>
 
           </div>
 
-          {/* Business Experience */}
+          {/* Experience */}
           <div>
-            <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
-              F&B / Business Experience *
-            </label>
-            <input
-              type="text"
-              placeholder="Briefly describe your existing multi-unit retail or restaurant management background..."
-              {...register('experience', { required: 'Experience summary is required' })}
-              className={`w-full px-4 py-3 rounded-xl border bg-gray-50 dark:bg-gray-800 text-brand-dark dark:text-brand-cream text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
-                errors.experience ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'
-              }`}
-            />
-            {errors.experience && <p className="mt-1 text-xs text-red-500">{errors.experience.message}</p>}
-          </div>
-
-          {/* Additional Message */}
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
-              Additional Notes / Franchise Plan
+            <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
+              Experience *
             </label>
             <textarea
               rows="4"
-              placeholder="Tell us why you want to introduce Martins Rolleg to your market..."
-              {...register('message')}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-brand-dark dark:text-brand-cream text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors"
+              placeholder="Tell us about your business or food & beverage experience..."
+              {...register('experience', { required: 'Experience information is required' })}
+              className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
+                errors.experience ? 'border-red-500' : 'border-gray-200'
+              }`}
             ></textarea>
+            {errors.experience && <p className="mt-1 text-xs text-red-500">{errors.experience.message}</p>}
           </div>
 
           <Button type="submit" variant="gold" size="lg" fullWidth icon={FiSend}>
-            Apply for Franchise Partnership
+            Apply Now
           </Button>
         </form>
       )}
