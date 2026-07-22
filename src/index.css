@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-olive: #667A35;
+  --color-brand-olive-dark: #4e5e27;
+  --color-brand-olive-light: #839b46;
+  --color-brand-cream: #F7F2E8;
+  --color-brand-cream-light: #FAF7F2;
+  --color-brand-dark: #2C2C2C;
+  --color-brand-charcoal: #1E1E1E;
+  --color-brand-gold: #D89B46;
+  --color-brand-gold-hover: #c48734;
+
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Poppins', sans-serif;
+  --font-arabic: 'Cairo', sans-serif;
+}
+
+@layer base {
+  :root {
+    --bg-main: #F7F2E8;
+    --bg-card: #FFFFFF;
+    --text-main: #2C2C2C;
+    --text-muted: #666666;
+    --border-color: #E2DACD;
+    --card-shadow: 0 10px 30px -5px rgba(44, 44, 44, 0.05);
+  }
+
+  .dark {
+    --bg-main: #181715;
+    --bg-card: #24221F;
+    --text-main: #F7F2E8;
+    --text-muted: #A3A09A;
+    --border-color: #383531;
+    --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-heading {
+    font-family: var(--font-heading);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F7F2E8;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #181715;
+}
+::-webkit-scrollbar-thumb {
+  background: #667A35;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4e5e27;
+}
+
+/* Glassmorphism utility */
+.glass-nav {
+  background: rgba(247, 242, 232, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.dark .glass-nav {
+  background: rgba(24, 23, 21, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.dark .glass-card {
+  background: rgba(36, 34, 31, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Hide scrollbar for Swiper and custom tabs */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Swiper custom styling */
+.swiper-pagination-bullet-active {
+  background: #667A35 !important;
+  width: 24px !important;
+  border-radius: 9999px !important;
+}
+
+/* Custom shimmer animation */
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.03); opacity: 1; }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s infinite ease-in-out;
+}
