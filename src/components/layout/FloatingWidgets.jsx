@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiArrowUp, FiShoppingBag } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 
+export const ORDER_NOW_URL = 'https://martins-roll-eg.fodista.com/apps/online/18p0hie137?category=BREAKFAST';
+
 export const FloatingWidgets = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -28,7 +30,7 @@ export const FloatingWidgets = () => {
   };
 
   const handleOrder = () => {
-    window.open('https://order.martinsrolleg.com', '_blank');
+    window.open(ORDER_NOW_URL, '_blank');
   };
 
   return (
@@ -67,7 +69,7 @@ export const FloatingWidgets = () => {
             whileTap={{ scale: 0.9 }}
             onClick={scrollToTop}
             aria-label="Scroll to top"
-            className="pointer-events-auto w-10 h-10 bg-brand-dark dark:bg-brand-cream text-white dark:text-brand-dark rounded-full flex items-center justify-center shadow-md hover:bg-brand-olive transition-colors"
+            className="pointer-events-auto w-10 h-10 bg-brand-dark text-white rounded-full flex items-center justify-center shadow-md hover:bg-brand-olive transition-colors"
           >
             <FiArrowUp className="w-5 h-5" />
           </motion.button>

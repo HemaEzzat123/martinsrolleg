@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { FloatingWidgets } from './components/layout/FloatingWidgets';
@@ -11,7 +10,7 @@ export function App() {
   const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
-    // Simulating initial bakery splash loader on first mount
+    // Initial splash loader
     const timer = setTimeout(() => {
       setInitialLoading(false);
     }, 1200);
@@ -24,18 +23,16 @@ export function App() {
   }
 
   return (
-    <ThemeProvider>
-      <BrowserRouter>
-        <div className="min-h-screen flex flex-col justify-between selection:bg-brand-olive selection:text-white">
-          <Navbar />
-          <main className="flex-grow">
-            <AppRoutes />
-          </main>
-          <Footer />
-          <FloatingWidgets />
-        </div>
-      </BrowserRouter>
-    </ThemeProvider>
+    <BrowserRouter>
+      <div className="min-h-screen flex flex-col justify-between bg-brand-cream text-brand-dark selection:bg-brand-olive selection:text-white">
+        <Navbar />
+        <main className="flex-grow">
+          <AppRoutes />
+        </main>
+        <Footer />
+        <FloatingWidgets />
+      </div>
+    </BrowserRouter>
   );
 }
 

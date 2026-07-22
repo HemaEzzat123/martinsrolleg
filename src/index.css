@@ -26,15 +26,6 @@
     --card-shadow: 0 10px 30px -5px rgba(44, 44, 44, 0.05);
   }
 
-  .dark {
-    --bg-main: #181715;
-    --bg-card: #24221F;
-    --text-main: #F7F2E8;
-    --text-muted: #A3A09A;
-    --border-color: #383531;
-    --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
-  }
-
   body {
     font-family: var(--font-body);
     background-color: var(--bg-main);
@@ -54,9 +45,6 @@
 ::-webkit-scrollbar-track {
   background: #F7F2E8;
 }
-.dark ::-webkit-scrollbar-track {
-  background: #181715;
-}
 ::-webkit-scrollbar-thumb {
   background: #667A35;
   border-radius: 4px;
@@ -67,25 +55,15 @@
 
 /* Glassmorphism utility */
 .glass-nav {
-  background: rgba(247, 242, 232, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-.dark .glass-nav {
-  background: rgba(24, 23, 21, 0.85);
+  background: rgba(247, 242, 232, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-.dark .glass-card {
-  background: rgba(36, 34, 31, 0.7);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 /* Hide scrollbar for Swiper and custom tabs */

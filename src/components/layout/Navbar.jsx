@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMenu, FiX, FiSun, FiMoon, FiShoppingBag } from 'react-icons/fi';
+import { FiMenu, FiX, FiShoppingBag } from 'react-icons/fi';
 import { NAV_LINKS } from '../../data/navigation';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
-import { useTheme } from '../../context/ThemeContext';
 import { Button } from '../common/Button';
+
+export const ORDER_NOW_URL = 'https://martins-roll-eg.fodista.com/apps/online/18p0hie137?category=BREAKFAST';
 
 export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isScrolled } = useScrollPosition();
-  const { isDark, toggleTheme } = useTheme();
   const location = useLocation();
 
   const handleOrderClick = () => {
-    window.open('https://order.martinsrolleg.com', '_blank');
+    window.open(ORDER_NOW_URL, '_blank');
   };
 
   return (
@@ -34,10 +34,10 @@ export const Navbar = () => {
               🌀
             </div>
             <div className="flex flex-col">
-              <span className="font-heading text-2xl font-extrabold tracking-tight text-brand-dark dark:text-brand-cream leading-none">
-                MARTINS<span className="text-brand-olive dark:text-brand-gold">ROLLEG</span>
+              <span className="font-heading text-2xl font-extrabold tracking-tight text-brand-dark leading-none">
+                MARTINS<span className="text-brand-olive">ROLLEG</span>
               </span>
-              <span className="text-[10px] uppercase tracking-widest text-brand-olive dark:text-brand-gold font-medium">
+              <span className="text-[10px] uppercase tracking-widest text-brand-olive font-medium">
                 Gourmet Cinnamon Bakery
               </span>
             </div>
@@ -51,17 +51,17 @@ export const Navbar = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`px-3 py-2 text-sm font-medium rounded-full transition-colors relative ${
+                  className={`px-3.5 py-2 text-sm font-medium rounded-full transition-colors relative ${
                     isActive
-                      ? 'text-brand-olive dark:text-brand-gold font-semibold'
-                      : 'text-gray-700 dark:text-gray-200 hover:text-brand-olive dark:hover:text-brand-gold'
+                      ? 'text-brand-olive font-bold'
+                      : 'text-gray-700 hover:text-brand-olive'
                   }`}
                 >
                   {link.name}
                   {isActive && (
                     <motion.div
                       layoutId="activeNavIndicator"
-                      className="absolute bottom-0 left-3 right-3 h-0.5 bg-brand-olive dark:bg-brand-gold rounded-full"
+                      className="absolute bottom-0 left-3.5 right-3.5 h-0.5 bg-brand-olive rounded-full"
                     />
                   )}
                 </Link>
@@ -71,14 +71,6 @@ export const Navbar = () => {
 
           {/* Right Actions */}
           <div className="hidden lg:flex items-center space-x-4">
-            <button
-              onClick={toggleTheme}
-              aria-label="Toggle Dark Mode"
-              className="p-2.5 rounded-full text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-            >
-              {isDark ? <FiSun className="w-5 h-5 text-amber-400" /> : <FiMoon className="w-5 h-5" />}
-            </button>
-
             <Button
               variant="primary"
               size="sm"
@@ -92,15 +84,8 @@ export const Navbar = () => {
           {/* Mobile Hamburger & Controls */}
           <div className="flex items-center space-x-2 lg:hidden">
             <button
-              onClick={toggleTheme}
-              className="p-2 rounded-full text-gray-700 dark:text-gray-200"
-            >
-              {isDark ? <FiSun className="w-5 h-5 text-amber-400" /> : <FiMoon className="w-5 h-5" />}
-            </button>
-
-            <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-brand-dark dark:text-brand-cream focus:outline-none"
+              className="p-2 text-brand-dark focus:outline-none"
             >
               {mobileMenuOpen ? <FiX className="w-7 h-7" /> : <FiMenu className="w-7 h-7" />}
             </button>
@@ -115,7 +100,7 @@ export const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-brand-cream dark:bg-brand-charcoal border-b border-gray-200 dark:border-gray-800 shadow-xl overflow-hidden"
+            className="lg:hidden bg-brand-cream border-b border-gray-200 shadow-xl overflow-hidden"
           >
             <div className="px-6 py-6 space-y-4">
               <div className="flex flex-col space-y-2">
@@ -128,8 +113,8 @@ export const Navbar = () => {
                       onClick={() => setMobileMenuOpen(false)}
                       className={`px-4 py-3 rounded-xl text-base font-medium transition-colors ${
                         isActive
-                          ? 'bg-brand-olive/10 text-brand-olive dark:bg-brand-gold/10 dark:text-brand-gold font-bold'
-                          : 'text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/5'
+                          ? 'bg-brand-olive/10 text-brand-olive font-bold'
+                          : 'text-gray-700 hover:bg-black/5'
                       }`}
                     >
                       {link.name}
@@ -138,7 +123,7 @@ export const Navbar = () => {
                 })}
               </div>
 
-              <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="pt-4 border-t border-gray-200">
                 <Button
                   variant="primary"
                   fullWidth
