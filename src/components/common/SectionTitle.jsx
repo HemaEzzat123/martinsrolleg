@@ -17,15 +17,15 @@ export const SectionTitle = ({
       className={`mb-12 ${center ? 'text-center' : 'text-left'} ${className}`}
     >
       {badge && (
-        <span className="inline-block px-4 py-1.5 mb-3 text-xs font-semibold uppercase tracking-widest text-brand-olive bg-brand-olive/10 dark:text-brand-gold dark:bg-brand-gold/10 rounded-full">
+        <span className="inline-block px-4 py-1.5 mb-3 text-xs font-extrabold uppercase tracking-widest text-[#2C463D] bg-[#2C463D]/12 rounded-full border border-[#2C463D]/20">
           {badge}
         </span>
       )}
-      <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-brand-dark dark:text-brand-cream font-heading">
+      <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-[#16241F] font-heading leading-tight">
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-4 text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-4 text-base md:text-lg text-[#2D423A] font-medium max-w-2xl mx-auto leading-relaxed">
           {subtitle}
         </p>
       )}

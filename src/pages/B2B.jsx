@@ -23,96 +23,95 @@ const SERVICES = [
 export const B2B = () => {
   return (
     <PageTransition>
-      <div className="pt-32 pb-20 bg-brand-cream/30">
+      <div className="relative pt-32 pb-20 bg-brand-cream text-brand-dark min-h-screen overflow-hidden">
         
-        {/* Hero */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-16">
-          <SectionTitle
-            badge="B2B & Wholesale"
-            title="Business Partnerships"
-            subtitle="We work with:"
-          />
+        {/* Background ambient glow shapes matching Home page */}
+        <div className="absolute top-1/4 left-10 w-96 h-96 bg-brand-olive/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-brand-gold/15 rounded-full blur-3xl pointer-events-none" />
 
-          {/* We Work With Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto mt-6 mb-12">
-            {WORK_WITH.map((item, idx) => (
-              <motion.div
-                key={item.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="bg-white p-6 rounded-3xl shadow-sm border border-amber-900/10 text-center"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-brand-olive/10 text-brand-olive flex items-center justify-center font-bold text-xl mb-3 mx-auto">
-                  🌀
-                </div>
-                <h3 className="text-lg font-bold font-heading text-brand-dark mb-1">
-                  {item.name}
-                </h3>
-                <p className="text-xs text-gray-500 leading-relaxed">
-                  {item.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          {/* Hero */}
+          <div className="text-center mb-16">
+            <SectionTitle
+              badge="B2B & Wholesale"
+              title="Business Partnerships"
+              subtitle="Supply your cafes, restaurants, or events with Martins Roll gourmet baked pastries."
+            />
 
-          <div className="flex justify-center">
-            <a href="#b2b-form">
-              <Button variant="primary" size="lg" icon={FiArrowDown}>
-                Become a Partner
-              </Button>
-            </a>
-          </div>
-        </div>
-
-        {/* Services List */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
-          <SectionTitle
-            badge="Our Services"
-            title="Wholesale & Commercial Solutions"
-            subtitle="Explore our flexible supply offerings designed for your business."
-          />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {SERVICES.map((s, idx) => {
-              const Icon = s.icon;
-              return (
+            {/* We Work With Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto mt-6 mb-12">
+              {WORK_WITH.map((item, idx) => (
                 <motion.div
-                  key={s.name}
+                  key={item.name}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
-                  className="bg-white p-8 rounded-3xl shadow-sm border border-amber-900/10 text-center hover:shadow-xl transition-all"
+                  className="bg-white p-6 rounded-3xl shadow-md border border-brand-olive/15 text-center"
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-brand-olive/10 text-brand-olive flex items-center justify-center text-2xl mb-4 mx-auto">
-                    <Icon className="w-7 h-7" />
-                  </div>
-                  <h3 className="text-xl font-bold font-heading text-brand-dark mb-2">
-                    {s.name}
-                  </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {s.desc}
+                  <h4 className="text-lg font-bold font-heading text-[#16241F] mb-1">
+                    {item.name}
+                  </h4>
+                  <p className="text-xs text-[#2D423A] font-medium leading-relaxed">
+                    {item.desc}
                   </p>
                 </motion.div>
-              );
-            })}
+              ))}
+            </div>
+
+            <div className="flex justify-center">
+              <a href="#b2b-form">
+                <Button variant="primary" size="lg" icon={FiArrowDown}>
+                  Contact B2B Team
+                </Button>
+              </a>
+            </div>
           </div>
-        </div>
 
-        {/* B2B Form Section */}
-        <div id="b2b-form" className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle
-            badge="Get Started"
-            title="Become a Partner"
-            subtitle="Fill out the form below to start our commercial partnership."
-          />
-          <B2BForm />
-        </div>
+          {/* Services Grid */}
+          <div className="mb-20">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {SERVICES.map((s, idx) => {
+                const Icon = s.icon;
+                return (
+                  <motion.div
+                    key={s.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="bg-white p-8 rounded-3xl shadow-md border border-brand-olive/15 text-center group hover:shadow-xl transition-all"
+                  >
+                    <div className="w-14 h-14 rounded-2xl bg-brand-olive/10 text-brand-olive flex items-center justify-center text-2xl mb-6 mx-auto group-hover:bg-brand-olive group-hover:text-white transition-colors">
+                      <Icon className="w-7 h-7" />
+                    </div>
+                    <h3 className="text-xl font-bold font-heading text-[#16241F] mb-2">
+                      {s.name}
+                    </h3>
+                    <p className="text-sm text-[#2D423A] font-medium leading-relaxed">
+                      {s.desc}
+                    </p>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
 
+          {/* Application Form */}
+          <div id="b2b-form" className="max-w-3xl mx-auto">
+            <SectionTitle
+              badge="Wholesale Order"
+              title="Request Wholesale Quote"
+              subtitle="Fill in your business inquiry details below and our corporate partnership manager will respond promptly."
+            />
+            <B2BForm />
+          </div>
+
+        </div>
       </div>
     </PageTransition>
   );
 };
+
 export default B2B;

@@ -70,13 +70,7 @@ export const Hero = () => {
                 Order Now
               </Button>
 
-              <a
-                href="#best-sellers"
-                className="inline-flex items-center font-medium text-brand-dark hover:text-brand-olive px-4 py-3 rounded-full hover:bg-black/5 transition-colors group"
-              >
-                <span>Explore Menu</span>
-                <FiArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
+
             </div>
 
             {/* Handwritten Callout */}

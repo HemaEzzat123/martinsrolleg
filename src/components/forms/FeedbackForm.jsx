@@ -5,15 +5,36 @@ import { FiStar, FiCheckCircle, FiSend, FiMapPin, FiExternalLink } from 'react-i
 import { BRANCHES } from '../../data/branches';
 import { Button } from '../common/Button';
 
-export const FeedbackForm = () => {
+export const FeedbackForm = ({ onFeedbackSubmit }) => {
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const onSubmit = (data) => {
-    const feedbackPayload = { ...data, rating };
-    console.log('Customer feedback submitted:', feedbackPayload);
+    const newFeedback = {
+      id: Date.now(),
+      name: data.name,
+      orderNumber: data.orderNumber || '',
+      rating,
+      comment: data.message,
+      date: 'Just now',
+      createdAt: new Date().toISOString(),
+    };
+
+    // Save to localStorage so it persists in the browser
+    try {
+      const existing = JSON.parse(localStorage.getItem('martins_customer_feedback') || '[]');
+      const updated = [newFeedback, ...existing];
+      localStorage.setItem('martins_customer_feedback', JSON.stringify(updated));
+    } catch (e) {
+      console.error('Error saving feedback:', e);
+    }
+
+    if (onFeedbackSubmit) {
+      onFeedbackSubmit(newFeedback);
+    }
+
     setSubmitted(true);
     reset();
     setRating(5);
@@ -21,15 +42,15 @@ export const FeedbackForm = () => {
   };
 
   return (
-    <div className="space-y-10 max-w-2xl mx-auto">
+    <div className="space-y-8 max-w-2xl mx-auto">
       
-      {/* Google Reviews Direct Action Buttons */}
-      <div className="bg-gradient-to-r from-brand-olive/10 to-brand-gold/10 p-6 rounded-3xl border border-brand-olive/20 text-center">
-        <h4 className="text-lg font-bold font-heading text-brand-dark mb-1">
+      {/* Google Reviews Direct Action Buttons - Deep Brand Olive Card */}
+      <div className="bg-[#2C463D] text-white p-6 md:p-8 rounded-3xl shadow-xl border border-[#2C463D]/30 text-center">
+        <h4 className="text-xl font-extrabold font-heading text-[#F8EFE3] mb-1">
           Leave a Google Review ⭐
         </h4>
-        <p className="text-xs text-gray-600 mb-4">
-          Love our cinnamon rolls? Support your favorite branch on Google Maps!
+        <p className="text-sm text-[#F8EFE3]/90 mb-5 font-medium">
+          Love our cinnamon rolls? Support your favorite Cairo branch on Google Maps!
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -39,9 +60,9 @@ export const FeedbackForm = () => {
               href={b.googleReviewUrl}
               target="_blank"
               rel="noreferrer"
-              className="w-full sm:w-auto px-5 py-2.5 bg-white text-brand-dark border border-gray-200 hover:border-brand-olive hover:text-brand-olive rounded-full text-xs font-bold flex items-center justify-center space-x-2 shadow-sm transition-all"
+              className="w-full sm:w-auto px-6 py-3 bg-[#F8EFE3] hover:bg-white text-[#2C463D] rounded-full text-xs font-extrabold flex items-center justify-center space-x-2 shadow-md transition-all transform hover:scale-105"
             >
-              <FiMapPin className="w-4 h-4 text-brand-gold" />
+              <FiMapPin className="w-4 h-4 text-[#B88236]" />
               <span>{b.name} Review</span>
               <FiExternalLink className="w-3.5 h-3.5" />
             </a>
@@ -49,29 +70,29 @@ export const FeedbackForm = () => {
         </div>
       </div>
 
-      {/* Main Feedback Form */}
-      <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-amber-900/10">
+      {/* Main Feedback Form Card */}
+      <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-brand-olive/20">
         {submitted ? (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className="text-center py-12"
           >
-            <FiCheckCircle className="w-16 h-16 text-brand-gold mx-auto mb-4" />
-            <h3 className="text-2xl font-bold font-heading text-brand-dark">
+            <FiCheckCircle className="w-16 h-16 text-[#2C463D] mx-auto mb-4" />
+            <h3 className="text-2xl font-bold font-heading text-[#16241F]">
               Thank You for Your Feedback!
             </h3>
-            <p className="mt-2 text-gray-600 text-sm">
-              We appreciate your review and look forward to serving you again.
+            <p className="mt-2 text-[#2D423A] text-sm font-medium">
+              Your feedback has been published below under <strong>Recent Customer Reviews</strong>!
             </p>
           </motion.div>
         ) : (
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             
             {/* Star Rating Picker */}
-            <div className="text-center pb-4 border-b border-gray-100">
-              <label className="block text-sm font-bold text-brand-dark uppercase tracking-wider mb-2">
-                قيم الخدمة
+            <div className="text-center pb-5 border-b border-gray-100">
+              <label className="block text-sm font-extrabold text-[#16241F] uppercase tracking-wider mb-2">
+                Rating / التقييم *
               </label>
               <div className="flex items-center justify-center space-x-2">
                 {[1, 2, 3, 4, 5].map((star) => (
@@ -84,7 +105,7 @@ export const FeedbackForm = () => {
                     className="p-1 transition-transform hover:scale-125 focus:outline-none"
                   >
                     <FiStar
-                      className={`w-8 h-8 ${
+                      className={`w-9 h-9 ${
                         star <= (hoverRating || rating)
                           ? 'text-amber-400 fill-amber-400'
                           : 'text-gray-300'
@@ -93,7 +114,7 @@ export const FeedbackForm = () => {
                   </button>
                 ))}
               </div>
-              <p className="text-xs font-semibold text-brand-olive mt-2">
+              <p className="text-sm font-bold text-[#2C463D] mt-2">
                 {rating === 5 ? 'Excellent ⭐⭐⭐⭐⭐' : rating === 4 ? 'Very Good ⭐⭐⭐⭐' : rating === 3 ? 'Good ⭐⭐⭐' : 'Fair'}
               </p>
             </div>
@@ -102,43 +123,43 @@ export const FeedbackForm = () => {
               
               {/* Name */}
               <div>
-                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                  Name *
+                <label className="block text-xs font-bold text-[#16241F] uppercase tracking-wider mb-2">
+                  Name / الاسم *
                 </label>
                 <input
                   type="text"
                   placeholder="Your Name"
                   {...register('name', { required: 'Name is required' })}
-                  className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
-                    errors.name ? 'border-red-500' : 'border-gray-200'
+                  className={`w-full px-4 py-3 rounded-xl border bg-[#F8EFE3]/40 text-[#16241F] font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2C463D] transition-colors ${
+                    errors.name ? 'border-red-500' : 'border-gray-300'
                   }`}
                 />
-                {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name.message}</p>}
+                {errors.name && <p className="mt-1 text-xs text-red-500 font-semibold">{errors.name.message}</p>}
               </div>
 
-              {/* Phone (Optional / اختياري) */}
+              {/* Phone (Optional) */}
               <div>
-                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                  Phone (اختياري / Optional)
+                <label className="block text-xs font-bold text-[#16241F] uppercase tracking-wider mb-2">
+                  Phone (Optional)
                 </label>
                 <input
                   type="tel"
-                  placeholder="Phone Number"
+                  placeholder="01118822595"
                   {...register('phone')}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-[#F8EFE3]/40 text-[#16241F] font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2C463D] transition-colors"
                 />
               </div>
 
               {/* Order Number */}
               <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                  Order Number
+                <label className="block text-xs font-bold text-[#16241F] uppercase tracking-wider mb-2">
+                  Order Number (Optional)
                 </label>
                 <input
                   type="text"
                   placeholder="e.g. #MR-1082"
                   {...register('orderNumber')}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-[#F8EFE3]/40 text-[#16241F] font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2C463D] transition-colors"
                 />
               </div>
 
@@ -146,21 +167,21 @@ export const FeedbackForm = () => {
 
             {/* Message */}
             <div>
-              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Message *
+              <label className="block text-xs font-bold text-[#16241F] uppercase tracking-wider mb-2">
+                Feedback Message / الملاحظات *
               </label>
               <textarea
                 rows="4"
                 placeholder="Share your experience with us..."
                 {...register('message', { required: 'Message is required' })}
-                className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
-                  errors.message ? 'border-red-500' : 'border-gray-200'
+                className={`w-full px-4 py-3 rounded-xl border bg-[#F8EFE3]/40 text-[#16241F] font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2C463D] transition-colors ${
+                  errors.message ? 'border-red-500' : 'border-gray-300'
                 }`}
               ></textarea>
-              {errors.message && <p className="mt-1 text-xs text-red-500">{errors.message.message}</p>}
+              {errors.message && <p className="mt-1 text-xs text-red-500 font-semibold">{errors.message.message}</p>}
             </div>
 
-            <Button type="submit" variant="gold" size="lg" fullWidth icon={FiSend}>
+            <Button type="submit" variant="primary" size="lg" fullWidth icon={FiSend}>
               Submit Feedback
             </Button>
           </form>
@@ -170,3 +191,5 @@ export const FeedbackForm = () => {
     </div>
   );
 };
+
+export default FeedbackForm;

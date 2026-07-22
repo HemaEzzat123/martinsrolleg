@@ -5,6 +5,7 @@ import { FiMenu, FiX, FiShoppingBag } from 'react-icons/fi';
 import { NAV_LINKS } from '../../data/navigation';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { Button } from '../common/Button';
+import { Logo } from '../common/Logo';
 
 export const ORDER_NOW_URL = 'https://martins-roll-eg.fodista.com/apps/online/18p0hie137?category=BREAKFAST';
 
@@ -29,19 +30,7 @@ export const Navbar = () => {
         <div className="flex items-center justify-between">
           
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 rounded-full bg-brand-olive text-white flex items-center justify-center text-xl font-bold shadow-md transform group-hover:rotate-45 transition-transform duration-500">
-              🌀
-            </div>
-            <div className="flex flex-col">
-              <span className="font-heading text-2xl font-extrabold tracking-tight text-brand-dark leading-none">
-                MARTIN'S<span className="text-brand-olive ml-2">ROLL</span>
-              </span>
-              <span className="text-[10px] uppercase tracking-widest text-brand-olive font-medium">
-                Gourmet Cinnamon Bakery
-              </span>
-            </div>
-          </Link>
+          <Logo />
 
           {/* Desktop Nav Links */}
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
@@ -51,17 +40,17 @@ export const Navbar = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`px-3.5 py-2 text-sm font-medium rounded-full transition-colors relative ${
+                  className={`px-3.5 py-2 text-sm font-semibold rounded-full transition-colors relative ${
                     isActive
-                      ? 'text-brand-olive font-bold'
-                      : 'text-gray-700 hover:text-brand-olive'
+                      ? 'text-[#2C463D] font-extrabold bg-[#2C463D]/10'
+                      : 'text-[#16241F] hover:text-[#2C463D] hover:bg-[#2C463D]/5'
                   }`}
                 >
                   {link.name}
                   {isActive && (
                     <motion.div
                       layoutId="activeNavIndicator"
-                      className="absolute bottom-0 left-3.5 right-3.5 h-0.5 bg-brand-olive rounded-full"
+                      className="absolute bottom-0 left-3.5 right-3.5 h-0.5 bg-[#2C463D] rounded-full"
                     />
                   )}
                 </Link>
@@ -69,11 +58,11 @@ export const Navbar = () => {
             })}
           </nav>
 
-          {/* Right Actions */}
+          {/* Desktop Order Button */}
           <div className="hidden lg:flex items-center space-x-4">
             <Button
               variant="primary"
-              size="sm"
+              size="md"
               icon={FiShoppingBag}
               onClick={handleOrderClick}
             >
@@ -81,49 +70,57 @@ export const Navbar = () => {
             </Button>
           </div>
 
-          {/* Mobile Hamburger & Controls */}
-          <div className="flex items-center space-x-2 lg:hidden">
+          {/* Mobile Menu Button */}
+          <div className="flex lg:hidden items-center space-x-3">
+            <Button
+              variant="primary"
+              size="sm"
+              icon={FiShoppingBag}
+              onClick={handleOrderClick}
+            >
+              Order
+            </Button>
+
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-brand-dark focus:outline-none"
+              className="p-2 rounded-xl text-[#16241F] hover:bg-[#2C463D]/10 transition-colors"
+              aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <FiX className="w-7 h-7" /> : <FiMenu className="w-7 h-7" />}
+              {mobileMenuOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
             </button>
           </div>
+
         </div>
       </div>
 
-      {/* Mobile Slide-over Drawer */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-brand-cream border-b border-gray-200 shadow-xl overflow-hidden"
+            className="lg:hidden bg-[#F8EFE3] border-b border-[#2C463D]/20 shadow-xl overflow-hidden"
           >
-            <div className="px-6 py-6 space-y-4">
-              <div className="flex flex-col space-y-2">
-                {NAV_LINKS.map((link) => {
-                  const isActive = location.pathname === link.path;
-                  return (
-                    <Link
-                      key={link.path}
-                      to={link.path}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`px-4 py-3 rounded-xl text-base font-medium transition-colors ${
-                        isActive
-                          ? 'bg-brand-olive/10 text-brand-olive font-bold'
-                          : 'text-gray-700 hover:bg-black/5'
-                      }`}
-                    >
-                      {link.name}
-                    </Link>
-                  );
-                })}
-              </div>
-
-              <div className="pt-4 border-t border-gray-200">
+            <div className="px-4 pt-3 pb-6 space-y-2">
+              {NAV_LINKS.map((link) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`block px-4 py-3 rounded-2xl text-base font-bold transition-colors ${
+                      isActive
+                        ? 'bg-[#2C463D] text-white shadow-md'
+                        : 'text-[#16241F] hover:bg-[#2C463D]/10'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+              <div className="pt-4">
                 <Button
                   variant="primary"
                   fullWidth
@@ -133,7 +130,7 @@ export const Navbar = () => {
                     handleOrderClick();
                   }}
                 >
-                  Order Now
+                  Order Online Now
                 </Button>
               </div>
             </div>
@@ -143,3 +140,5 @@ export const Navbar = () => {
     </header>
   );
 };
+
+export default Navbar;

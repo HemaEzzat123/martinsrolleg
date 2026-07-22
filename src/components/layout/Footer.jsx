@@ -1,39 +1,23 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiInstagram, FiFacebook, FiSend, FiClock, FiMapPin, FiPhone } from 'react-icons/fi';
+import { FiInstagram, FiFacebook, FiClock, FiMapPin, FiPhone } from 'react-icons/fi';
 import { SiTiktok } from 'react-icons/si';
+import { FaWhatsapp } from 'react-icons/fa';
 import { NAV_LINKS } from '../../data/navigation';
-import { Button } from '../common/Button';
+import { Logo } from '../common/Logo';
 
 export const Footer = () => {
-  const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setEmail('');
-      setTimeout(() => setSubscribed(false), 5000);
-    }
-  };
-
   return (
-    <footer className="bg-[#1E1E1E] text-gray-300 pt-16 pb-8 border-t border-amber-900/20">
+    <footer className="bg-[#181818] text-gray-300 pt-16 pb-8 border-t border-amber-900/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-gray-800">
           
           {/* Brand Info */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full bg-brand-olive text-white flex items-center justify-center text-xl font-bold">
-                🌀
-              </div>
-              <span className="font-heading text-2xl font-extrabold tracking-tight text-white">
-                MARTIN'S<span className="text-brand-gold ml-2">ROLL</span>
-              </span>
+            <div className="bg-[#F8EFE3] px-4 py-2.5 rounded-2xl inline-block shadow-md">
+              <Logo />
             </div>
-            <p className="text-sm text-gray-400 leading-relaxed">
+            <p className="text-sm text-gray-300 leading-relaxed font-medium">
               Crafted fresh every single day. Gourmet cinnamon rolls, fluffy brioche donuts, waffle towers, and artisanal coffee blends made for true bakery lovers.
             </p>
             <div className="flex space-x-3 pt-2">
@@ -42,7 +26,7 @@ export const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"
-                className="w-9 h-9 rounded-full bg-gray-800 hover:bg-brand-olive text-gray-300 hover:text-white flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-gray-800 hover:bg-[#2C463D] text-gray-200 hover:text-white flex items-center justify-center transition-colors"
               >
                 <FiInstagram className="w-4 h-4" />
               </a>
@@ -51,7 +35,7 @@ export const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="TikTok"
-                className="w-9 h-9 rounded-full bg-gray-800 hover:bg-brand-olive text-gray-300 hover:text-white flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-gray-800 hover:bg-[#2C463D] text-gray-200 hover:text-white flex items-center justify-center transition-colors"
               >
                 <SiTiktok className="w-4 h-4" />
               </a>
@@ -60,22 +44,22 @@ export const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Facebook"
-                className="w-9 h-9 rounded-full bg-gray-800 hover:bg-brand-olive text-gray-300 hover:text-white flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-gray-800 hover:bg-[#2C463D] text-gray-200 hover:text-white flex items-center justify-center transition-colors"
               >
                 <FiFacebook className="w-4 h-4" />
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
+          {/* Quick Links (Two Columns Grid) */}
+          <div className="lg:col-span-1">
             <h3 className="text-white text-lg font-bold font-heading mb-4">Quick Links</h3>
-            <ul className="space-y-2.5">
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-2.5">
               {NAV_LINKS.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-sm text-gray-400 hover:text-brand-gold transition-colors inline-block"
+                    className="text-sm text-gray-300 hover:text-brand-gold transition-colors inline-block font-medium"
                   >
                     {link.name}
                   </Link>
@@ -85,76 +69,61 @@ export const Footer = () => {
           </div>
 
           {/* Opening Hours & Contact */}
-          <div>
+          <div className="lg:col-span-2">
             <h3 className="text-white text-lg font-bold font-heading mb-4">Store & Hours</h3>
-            <ul className="space-y-3 text-sm text-gray-400">
+            <ul className="space-y-3.5 text-sm text-gray-300">
               <li className="flex items-start space-x-3">
                 <FiClock className="w-5 h-5 text-brand-gold shrink-0 mt-0.5" />
-                <span>
-                  <strong>Sun - Sat:</strong> 7:00 AM - 12:00 AM
+                <span className="text-gray-200">
+                  <strong className="text-white">Hours:</strong> Open 24/7
                 </span>
               </li>
               <li className="flex items-start space-x-3">
                 <FiMapPin className="w-5 h-5 text-brand-gold shrink-0 mt-0.5" />
-                <span>Riyadh • Dubai • Jeddah • Abu Dhabi • Dammam</span>
+                <div className="space-y-1 text-gray-300 font-medium">
+                  <p><strong className="text-white">Nasr City:</strong> 14 Ahmed Kassim Gouda, Abbas El Akkad, Cairo</p>
+                  <p><strong className="text-white">Sheraton:</strong> Ahmed El Sheikh, Al Nozha, Cairo</p>
+                </div>
+              </li>
+              <li className="flex items-center space-x-3 pt-1">
+                <FaWhatsapp className="w-5 h-5 text-emerald-400 shrink-0" />
+                <a
+                  href="https://wa.me/201118822595"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-emerald-400 text-gray-100 transition-colors font-bold"
+                >
+                  WhatsApp: 01118822595
+                </a>
               </li>
               <li className="flex items-center space-x-3">
                 <FiPhone className="w-5 h-5 text-brand-gold shrink-0" />
-                <span>+966 11 234 5678</span>
+                <a href="tel:01118822595" className="hover:text-brand-gold text-gray-200 transition-colors font-bold">
+                  Call: 01118822595
+                </a>
               </li>
             </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div>
-            <h3 className="text-white text-lg font-bold font-heading mb-4">Stay Sweet</h3>
-            <p className="text-sm text-gray-400 mb-4">
-              Subscribe to get secret menu updates, special offers & bakery news directly to your inbox.
-            </p>
-            <form onSubmit={handleSubscribe} className="space-y-3">
-              <div className="relative">
-                <input
-                  type="email"
-                  required
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-full text-white text-sm focus:outline-none focus:border-brand-gold transition-colors pr-10"
-                />
-                <button
-                  type="submit"
-                  className="absolute right-1.5 top-1.5 bottom-1.5 px-3 bg-brand-olive hover:bg-brand-olive-dark text-white rounded-full flex items-center justify-center transition-colors"
-                >
-                  <FiSend className="w-4 h-4" />
-                </button>
-              </div>
-              {subscribed && (
-                <p className="text-xs text-green-400">
-                  ✓ Thank you! You're subscribed to sweet updates.
-                </p>
-              )}
-            </form>
           </div>
 
         </div>
 
         {/* Copyright */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-500 gap-4">
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-400 gap-4">
           <p>
             © {new Date().getFullYear()} Martins Rolleg. All rights reserved. • Built by{' '}
             <a
               href="https://ibrahim-ezzat.vercel.app/"
               target="_blank"
               rel="noreferrer"
-              className="text-brand-gold hover:underline font-medium transition-colors"
+              className="text-brand-gold hover:underline font-bold transition-colors"
             >
-              Engineer🌀Ibrahim Ezzat
+              Engineer 🌀 Ibrahim Ezzat
             </a>
           </p>
           <div className="flex space-x-6">
-            <Link to="/contact" className="hover:text-gray-300">Privacy Policy</Link>
-            <Link to="/contact" className="hover:text-gray-300">Terms of Service</Link>
-            <Link to="/b2b" className="hover:text-gray-300">Wholesale Terms</Link>
+            <Link to="/contact" className="hover:text-gray-200 font-medium">Privacy Policy</Link>
+            <Link to="/contact" className="hover:text-gray-200 font-medium">Terms of Service</Link>
+            <Link to="/b2b" className="hover:text-gray-200 font-medium">Wholesale Terms</Link>
           </div>
         </div>
       </div>
