@@ -1,81 +1,108 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { FiBriefcase, FiGift, FiBookOpen, FiAward, FiHeart, FiUsers, FiArrowDown } from 'react-icons/fi';
 import { PageTransition } from '../components/common/PageTransition';
-import { SectionTitle } from '../components/common/SectionTitle';
 import { CateringForm } from '../components/forms/CateringForm';
-import { Button } from '../components/common/Button';
-
-const CATERING_SERVICES = [
-  { icon: FiBriefcase, title: 'Corporate Meetings', desc: 'Fresh warm rolls and gourmet coffee stations for your corporate meetings.' },
-  { icon: FiGift, title: 'Birthdays', desc: 'Custom cinnamon roll towers and sweet dessert setups for birthday parties.' },
-  { icon: FiAward, title: 'Schools', desc: 'Special packages for school celebrations and teacher appreciation events.' },
-  { icon: FiBookOpen, title: 'Universities', desc: 'Catering for campus events, graduation ceremonies, and student gatherings.' },
-  { icon: FiHeart, title: 'Weddings', desc: 'Luxury dessert stations designed to make your special day memorable.' },
-  { icon: FiUsers, title: 'Private Events', desc: 'Exclusive catering setups tailored to your private gatherings and parties.' },
-];
 
 export const Catering = () => {
   return (
     <PageTransition>
-      <div className="pt-32 pb-20 bg-brand-cream/30">
-        
-        {/* Catering Hero */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-16">
-          <SectionTitle
-            badge="Gourmet Events"
-            title="Martin's Roll Catering"
-            subtitle="We provide catering for:"
-          />
+      <div className="pt-28 pb-20 bg-white min-h-screen">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          
+          {/* Block 1: CATERING YOUR EVENT? */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch overflow-hidden rounded-xl shadow-sm">
+            {/* Left Light Green Card */}
+            <div className="md:col-span-5 bg-[#C5E9B4] p-8 md:p-10 flex flex-col justify-center text-left">
+              <h2 className="text-3xl md:text-4xl font-extrabold font-heading text-[#2C4824] tracking-tight mb-4 uppercase">
+                CATERING YOUR EVENT?
+              </h2>
+              <p className="text-xs md:text-sm text-[#2C4824]/90 leading-relaxed font-medium">
+                Transform your special moments into unforgettable experiences with our bespoke catering service. From elegant weddings to corporate gatherings, we craft unique menus and stunning displays that reflect your style and vision. Let us bring the magic of French pastries and gourmet delights to your next celebration.
+              </p>
+            </div>
 
-          <div className="mt-6 flex justify-center">
-            <a href="#catering-form">
-              <Button variant="primary" size="lg" icon={FiArrowDown}>
-                Request Catering
-              </Button>
+            {/* Right Photo Collages (4 vertical slices) */}
+            <div className="md:col-span-7 grid grid-cols-4 gap-1 h-64 md:h-auto min-h-[300px]">
+              <div className="h-full overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=400&q=80"
+                  alt="Pastry tier 1"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="h-full overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=400&q=80"
+                  alt="Pastry tier 2"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="h-full overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=400&q=80"
+                  alt="Pastry tier 3"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="h-full overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=80"
+                  alt="Pastry tier 4"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Middle Dark Green Action Bar / Button */}
+          <div className="w-full">
+            <a
+              href="#catering-form"
+              className="block w-full py-4 text-center bg-[#1D4A3E] hover:bg-[#15382F] text-white font-semibold text-sm uppercase tracking-wider rounded-lg transition-colors shadow-sm"
+            >
+              Request Event Quote
             </a>
           </div>
-        </div>
 
-        {/* Catering Services Grid */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {CATERING_SERVICES.map((service, idx) => {
-              const Icon = service.icon;
-              return (
-                <motion.div
-                  key={service.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="bg-white p-8 rounded-3xl shadow-sm border border-amber-900/10 hover:shadow-xl transition-all text-center group"
-                >
-                  <div className="w-14 h-14 rounded-2xl bg-brand-olive/10 text-brand-olive flex items-center justify-center text-2xl mb-6 mx-auto group-hover:bg-brand-olive group-hover:text-white transition-colors">
-                    <Icon className="w-7 h-7" />
-                  </div>
-                  <h3 className="text-xl font-bold font-heading text-brand-dark mb-2">
-                    {service.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {service.desc}
-                  </p>
-                </motion.div>
-              );
-            })}
+          {/* Block 2: CATERING FOR BUSINESSES? */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch overflow-hidden rounded-xl shadow-sm">
+            {/* Left Light Green Card */}
+            <div className="md:col-span-5 bg-[#C5E9B4] p-8 md:p-10 flex flex-col justify-center text-left">
+              <h2 className="text-3xl md:text-4xl font-extrabold font-heading text-[#2C4824] tracking-tight mb-4 uppercase">
+                CATERING FOR BUSINESSES?
+              </h2>
+              <p className="text-xs md:text-sm text-[#2C4824]/90 leading-relaxed font-medium">
+                Does your F&B business need high quality breads, croissants, tarts, pastries? We got you covered. With multiple solutions such as ready-to-proof, ready-to-bake, par-baked, or ready-to-display solutions we got your business covered.
+              </p>
+            </div>
+
+            {/* Right Photo Collages (Platters / Boxes) */}
+            <div className="md:col-span-7 grid grid-cols-2 gap-1 h-64 md:h-auto min-h-[300px]">
+              <div className="h-full overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80"
+                  alt="Business Bakery Box 1"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="h-full overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80"
+                  alt="Business Bakery Box 2"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
-        </div>
 
-        {/* Catering Form */}
-        <div id="catering-form" className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle
-            badge="Get Started"
-            title="Request Catering"
-            subtitle="Fill out the form below and we will contact you to confirm your catering details."
-          />
-          <CateringForm />
-        </div>
+          {/* Form Section */}
+          <div id="catering-form" className="pt-10 max-w-3xl mx-auto">
+            <h3 className="text-2xl font-bold font-heading text-center text-brand-dark mb-6">
+              Request Catering
+            </h3>
+            <CateringForm />
+          </div>
 
+        </div>
       </div>
     </PageTransition>
   );
