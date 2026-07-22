@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
-import { FiCheckCircle, FiUploadCloud, FiFileText, FiSend } from 'react-icons/fi';
+import { FiCheckCircle, FiUploadCloud, FiFileText } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 import { BRANCHES } from '../../data/branches';
 import { Button } from '../common/Button';
 
@@ -33,8 +34,22 @@ export const CareersForm = () => {
       return;
     }
 
-    const applicationData = { ...data, resumeFileName: resumeFile.name };
-    console.log('Hiring application submitted:', applicationData);
+    // Format WhatsApp message for HR
+    const message = `*New Job Application - Martin's Roll* 👨‍🍳\n\n` +
+      `• *Full Name:* ${data.fullName || 'N/A'}\n` +
+      `• *Phone:* ${data.phone || 'N/A'}\n` +
+      `• *Email:* ${data.email || 'N/A'}\n` +
+      `• *Position Applied For:* ${data.position || 'N/A'}\n` +
+      `• *Target Branch:* ${data.branch || 'N/A'}\n` +
+      `• *Years of Experience:* ${data.experience || 'N/A'}\n` +
+      `• *CV File Name:* ${resumeFile.name}\n` +
+      `• *Cover Message:* ${data.message || 'None'}`;
+
+    const whatsappUrl = `https://wa.me/201050611391?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+
     setSubmitted(true);
     reset();
     setResumeFile(null);
@@ -52,10 +67,10 @@ export const CareersForm = () => {
         >
           <FiCheckCircle className="w-16 h-16 text-brand-olive mx-auto mb-4" />
           <h3 className="text-2xl font-bold font-heading text-brand-dark">
-            Application Submitted Successfully!
+            Application Sent!
           </h3>
           <p className="mt-3 text-gray-600 text-sm max-w-md mx-auto">
-            Thank you for applying to Martin's Roll. Our HR team will review your application and reach out soon.
+            Thank you for applying. Opening WhatsApp to submit your details to HR.
           </p>
         </motion.div>
       ) : (
@@ -86,7 +101,7 @@ export const CareersForm = () => {
               </label>
               <input
                 type="tel"
-                placeholder="+20 100 000 0000"
+                placeholder="01050611391"
                 {...register('phone', { required: 'Phone number is required' })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
                   errors.phone ? 'border-red-500' : 'border-gray-200'
@@ -218,8 +233,8 @@ export const CareersForm = () => {
             ></textarea>
           </div>
 
-          <Button type="submit" variant="primary" size="lg" fullWidth icon={FiSend}>
-            Apply
+          <Button type="submit" variant="primary" size="lg" fullWidth icon={FaWhatsapp}>
+            Apply via WhatsApp
           </Button>
 
         </form>
