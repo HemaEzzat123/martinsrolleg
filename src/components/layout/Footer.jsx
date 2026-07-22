@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiInstagram, FiTwitter, FiFacebook, FiLinkedin, FiSend, FiClock, FiMapPin, FiPhone } from 'react-icons/fi';
+import { FiInstagram, FiFacebook, FiSend, FiClock, FiMapPin, FiPhone } from 'react-icons/fi';
 import { SiTiktok } from 'react-icons/si';
 import { NAV_LINKS } from '../../data/navigation';
 import { Button } from '../common/Button';
@@ -30,23 +30,38 @@ export const Footer = () => {
                 🌀
               </div>
               <span className="font-heading text-2xl font-extrabold tracking-tight text-white">
-                MARTINS<span className="text-brand-gold">ROLLEG</span>
+                MARTIN'S<span className="text-brand-gold ml-2">ROLL</span>
               </span>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
               Crafted fresh every single day. Gourmet cinnamon rolls, fluffy brioche donuts, waffle towers, and artisanal coffee blends made for true bakery lovers.
             </p>
             <div className="flex space-x-3 pt-2">
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-gray-800 hover:bg-brand-olive text-gray-300 hover:text-white flex items-center justify-center transition-colors">
+              <a
+                href="https://www.instagram.com/martinsroll1?fbclid=IwY2xjawTNq-lleHRuA2FlbQIxMABicmlkETEwU2l6QngwdWV1SGJzT0hsc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHqhaZfihGl0UAQek3iiPCPZLRNHQaXgYAiU7M4Hyxfte4yRMdI9EF_3W0gNX_aem_pTgolNMXXPwaDW4VqxzN1w"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="w-9 h-9 rounded-full bg-gray-800 hover:bg-brand-olive text-gray-300 hover:text-white flex items-center justify-center transition-colors"
+              >
                 <FiInstagram className="w-4 h-4" />
               </a>
-              <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-gray-800 hover:bg-brand-olive text-gray-300 hover:text-white flex items-center justify-center transition-colors">
+              <a
+                href="https://www.tiktok.com/@martins.roll?fbclid=IwY2xjawTNq_ZleHRuA2FlbQIxMABicmlkETEwU2l6QngwdWV1SGJzT0hsc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHqz-eac-g0o0qRIidiCLqGBRxOHOOobY08OIxcUBTStYIdpsXn1x0XjsW_Fc_aem_2lVHcRlY5bV-P5gQjY0djg"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="TikTok"
+                className="w-9 h-9 rounded-full bg-gray-800 hover:bg-brand-olive text-gray-300 hover:text-white flex items-center justify-center transition-colors"
+              >
                 <SiTiktok className="w-4 h-4" />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-gray-800 hover:bg-brand-olive text-gray-300 hover:text-white flex items-center justify-center transition-colors">
-                <FiTwitter className="w-4 h-4" />
-              </a>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-gray-800 hover:bg-brand-olive text-gray-300 hover:text-white flex items-center justify-center transition-colors">
+              <a
+                href="https://www.facebook.com/profile.php?id=61558526129050"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook"
+                className="w-9 h-9 rounded-full bg-gray-800 hover:bg-brand-olive text-gray-300 hover:text-white flex items-center justify-center transition-colors"
+              >
                 <FiFacebook className="w-4 h-4" />
               </a>
             </div>
@@ -124,9 +139,19 @@ export const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-500">
-          <p>© {new Date().getFullYear()} Martins Rolleg. All rights reserved.</p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-500 gap-4">
+          <p>
+            © {new Date().getFullYear()} Martins Rolleg. All rights reserved. • Built by{' '}
+            <a
+              href="https://ibrahim-ezzat.vercel.app/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-brand-gold hover:underline font-medium transition-colors"
+            >
+              Engineer🌀Ibrahim Ezzat
+            </a>
+          </p>
+          <div className="flex space-x-6">
             <Link to="/contact" className="hover:text-gray-300">Privacy Policy</Link>
             <Link to="/contact" className="hover:text-gray-300">Terms of Service</Link>
             <Link to="/b2b" className="hover:text-gray-300">Wholesale Terms</Link>

@@ -4,6 +4,7 @@ import { FiArrowUp, FiShoppingBag } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 
 export const ORDER_NOW_URL = 'https://martins-roll-eg.fodista.com/apps/online/18p0hie137?category=BREAKFAST';
+export const WHATSAPP_PHONE = '201118822595';
 
 export const FloatingWidgets = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -26,7 +27,7 @@ export const FloatingWidgets = () => {
   };
 
   const handleWhatsapp = () => {
-    window.open('https://wa.me/966501234567?text=Hello%20Martins%20Rolleg!%20I%20would%20like%20to%20inquire%20about%20your%20cinnamon%20rolls.', '_blank');
+    window.open(`https://wa.me/${WHATSAPP_PHONE}?text=Hello%20Martin's%20Roll!%20I%20would%20like%20to%20inquire%20about%20your%20cinnamon%20rolls.`, '_blank');
   };
 
   const handleOrder = () => {

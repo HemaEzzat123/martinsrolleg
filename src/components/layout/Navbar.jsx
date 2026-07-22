@@ -35,7 +35,7 @@ export const Navbar = () => {
             </div>
             <div className="flex flex-col">
               <span className="font-heading text-2xl font-extrabold tracking-tight text-brand-dark leading-none">
-                MARTINS<span className="text-brand-olive">ROLLEG</span>
+                MARTIN'S<span className="text-brand-olive ml-2">ROLL</span>
               </span>
               <span className="text-[10px] uppercase tracking-widest text-brand-olive font-medium">
                 Gourmet Cinnamon Bakery

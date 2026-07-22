@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { FiCheckCircle, FiSend } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 import { Button } from '../common/Button';
 
 export const CateringForm = () => {
@@ -9,7 +10,20 @@ export const CateringForm = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const onSubmit = (data) => {
-    console.log('Catering request submitted:', data);
+    // Format WhatsApp message
+    const message = `*New Catering Request - Martin's Roll* 🥐\n\n` +
+      `• *Name:* ${data.name || 'N/A'}\n` +
+      `• *Company:* ${data.company || 'N/A'}\n` +
+      `• *Phone:* ${data.phone || 'N/A'}\n` +
+      `• *Date:* ${data.date || 'N/A'}\n` +
+      `• *Number of Guests:* ${data.numberOfGuests || 'N/A'}\n` +
+      `• *Notes:* ${data.notes || 'None'}`;
+
+    const whatsappUrl = `https://wa.me/201118822595?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+
     setSubmitted(true);
     reset();
     setTimeout(() => setSubmitted(false), 6000);
@@ -28,7 +42,7 @@ export const CateringForm = () => {
             Catering Request Received!
           </h3>
           <p className="mt-2 text-gray-600 max-w-md mx-auto text-sm">
-            Thank you for contacting Martin's Roll Catering. Our team will get back to you shortly.
+            Thank you for contacting Martin's Roll Catering. Opening WhatsApp to complete your request.
           </p>
         </motion.div>
       ) : (
@@ -71,7 +85,7 @@ export const CateringForm = () => {
               </label>
               <input
                 type="tel"
-                placeholder="+20 100 000 0000"
+                placeholder="01118822595"
                 {...register('phone', { required: 'Phone number is required' })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
                   errors.phone ? 'border-red-500' : 'border-gray-200'
@@ -127,8 +141,8 @@ export const CateringForm = () => {
             ></textarea>
           </div>
 
-          <Button type="submit" variant="primary" size="lg" fullWidth icon={FiSend}>
-            Request Catering
+          <Button type="submit" variant="primary" size="lg" fullWidth icon={FaWhatsapp}>
+            Send Request via WhatsApp
           </Button>
         </form>
       )}

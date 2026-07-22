@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
-import { FiCheckCircle, FiSend } from 'react-icons/fi';
+import { FiCheckCircle } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 import { Button } from '../common/Button';
 
 export const FranchiseForm = () => {
@@ -9,7 +10,21 @@ export const FranchiseForm = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const onSubmit = (data) => {
-    console.log('Franchise application submitted:', data);
+    // Format WhatsApp message
+    const message = `*New Franchise Application - Martin's Roll* 🏢\n\n` +
+      `• *Full Name:* ${data.fullName || 'N/A'}\n` +
+      `• *Country:* ${data.country || 'N/A'}\n` +
+      `• *City:* ${data.city || 'N/A'}\n` +
+      `• *Phone:* ${data.phone || 'N/A'}\n` +
+      `• *Email:* ${data.email || 'N/A'}\n` +
+      `• *Investment Budget:* ${data.investmentBudget || 'N/A'}\n` +
+      `• *Experience:* ${data.experience || 'N/A'}`;
+
+    const whatsappUrl = `https://wa.me/201118822595?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+
     setSubmitted(true);
     reset();
     setTimeout(() => setSubmitted(false), 6000);
@@ -25,10 +40,10 @@ export const FranchiseForm = () => {
         >
           <FiCheckCircle className="w-16 h-16 text-brand-gold mx-auto mb-4" />
           <h3 className="text-2xl font-bold font-heading text-brand-dark">
-            Franchise Application Received!
+            Application Sent!
           </h3>
           <p className="mt-2 text-gray-600 max-w-md mx-auto text-sm">
-            Thank you for applying. Our franchise team will get back to you soon.
+            Opening WhatsApp to complete your franchise application.
           </p>
         </motion.div>
       ) : (
@@ -90,7 +105,7 @@ export const FranchiseForm = () => {
               </label>
               <input
                 type="tel"
-                placeholder="Phone Number"
+                placeholder="01118822595"
                 {...register('phone', { required: 'Phone is required' })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
                   errors.phone ? 'border-red-500' : 'border-gray-200'
@@ -149,8 +164,8 @@ export const FranchiseForm = () => {
             {errors.experience && <p className="mt-1 text-xs text-red-500">{errors.experience.message}</p>}
           </div>
 
-          <Button type="submit" variant="gold" size="lg" fullWidth icon={FiSend}>
-            Apply Now
+          <Button type="submit" variant="gold" size="lg" fullWidth icon={FaWhatsapp}>
+            Apply Now via WhatsApp
           </Button>
         </form>
       )}

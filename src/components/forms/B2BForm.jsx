@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
-import { FiCheckCircle, FiSend } from 'react-icons/fi';
+import { FiCheckCircle } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 import { Button } from '../common/Button';
 
 export const B2BForm = () => {
@@ -9,7 +10,19 @@ export const B2BForm = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const onSubmit = (data) => {
-    console.log('B2B request submitted:', data);
+    // Format WhatsApp message
+    const message = `*New B2B Partner Inquiry - Martin's Roll* 🤝\n\n` +
+      `• *Name:* ${data.name || 'N/A'}\n` +
+      `• *Email:* ${data.email || 'N/A'}\n` +
+      `• *Phone:* ${data.phone || 'N/A'}\n` +
+      `• *Place/Business:* ${data.place || 'N/A'}\n` +
+      `• *Notes:* ${data.notes || 'None'}`;
+
+    const whatsappUrl = `https://wa.me/201118822595?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+
     setSubmitted(true);
     reset();
     setTimeout(() => setSubmitted(false), 6000);
@@ -25,10 +38,10 @@ export const B2BForm = () => {
         >
           <FiCheckCircle className="w-16 h-16 text-brand-olive mx-auto mb-4" />
           <h3 className="text-2xl font-bold font-heading text-brand-dark">
-            Partner Request Received!
+            Partner Request Sent!
           </h3>
           <p className="mt-2 text-gray-600 max-w-md mx-auto text-sm">
-            Thank you for reaching out. Our business development team will contact you shortly.
+            Opening WhatsApp to complete your partnership inquiry.
           </p>
         </motion.div>
       ) : (
@@ -74,7 +87,7 @@ export const B2BForm = () => {
               </label>
               <input
                 type="tel"
-                placeholder="Phone Number"
+                placeholder="01118822595"
                 {...register('phone', { required: 'Phone number is required' })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
                   errors.phone ? 'border-red-500' : 'border-gray-200'
@@ -114,8 +127,8 @@ export const B2BForm = () => {
             ></textarea>
           </div>
 
-          <Button type="submit" variant="primary" size="lg" fullWidth icon={FiSend}>
-            Become a Partner
+          <Button type="submit" variant="primary" size="lg" fullWidth icon={FaWhatsapp}>
+            Become a Partner via WhatsApp
           </Button>
         </form>
       )}
