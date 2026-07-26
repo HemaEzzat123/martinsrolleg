@@ -81,8 +81,8 @@ export const Footer = () => {
               <li className="flex items-start space-x-3">
                 <FiMapPin className="w-5 h-5 text-brand-gold shrink-0 mt-0.5" />
                 <div className="space-y-1 text-gray-300 font-medium">
-                  <p><strong className="text-white">Nasr City:</strong> 14 Ahmed Kassim Gouda, Abbas El Akkad, Cairo</p>
-                  <p><strong className="text-white">Sheraton:</strong> Ahmed El Sheikh, Al Nozha, Cairo</p>
+                  <p><strong className="text-white">Sheraton:</strong> <span className="text-gray-400" > Ahmed El Sheikh, Al Nozha, Cairo</span></p>
+                  <p><strong className="text-white">Nasr City:</strong> <span className="text-gray-400">14 Ahmed Kassim Gouda, Abbas El Akkad, Cairo</span> </p>
                 </div>
               </li>
               <li className="flex items-center space-x-3 pt-1">

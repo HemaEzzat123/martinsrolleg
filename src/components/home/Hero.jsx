@@ -42,22 +42,20 @@ export const Hero = () => {
             </motion.div>
 
             {/* Main Heading */}
-            <h1 className="text-4xl sm:text-6xl xl:text-7xl font-extrabold font-heading text-brand-dark tracking-tight leading-[1.1]">
-              Crafted Fresh <br />
+            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-extrabold font-heading text-brand-dark tracking-tight leading-[1.1]">
+              Luxury Handmade <br />
               <span className="text-brand-olive italic font-normal">
-                Every Day.
+                Every bite, a journey.
               </span>
             </h1>
 
             {/* Subtitle */}
             <p className="mt-6 text-lg sm:text-xl text-gray-700 font-medium leading-relaxed max-w-lg">
-              Premium Cinnamon Rolls <br />
-              <span className="text-brand-olive font-bold">Donuts • Waffles • Specialty Coffee</span>
+              Premium Bakery <br />
+              <span className="text-brand-olive font-bold">Croissant • Desserts • Specialty Coffee</span>
             </p>
 
-            <p className="mt-3 text-sm text-gray-500">
-              Immerse your senses in warm, hand-swirled cinnamon pastry perfection, coated in golden caramel & organic vanilla glaze.
-            </p>
+           
 
             {/* CTAs */}
             <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -163,18 +161,18 @@ export const Hero = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.2 }}
-            className="lg:col-span-6 relative flex justify-center"
+            className="lg:col-span-6 relative flex justify-center items-center w-full"
           >
-            <div className="relative w-full max-w-lg aspect-square">
+            <div className="relative w-full max-w-xl lg:max-w-2xl aspect-square md:aspect-[5/4] lg:aspect-square">
               {/* Decorative Circle Background */}
-              <div className="absolute inset-4 rounded-full bg-gradient-to-tr from-brand-olive/20 to-brand-gold/30 blur-2xl transform rotate-12" />
+              <div className="absolute inset-2 rounded-full bg-gradient-to-tr from-brand-olive/20 to-brand-gold/30 blur-3xl transform rotate-12" />
               
               {/* Main Image Frame */}
-              <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/60 group">
+              <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/70 group">
                 <img
-                  src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80"
-                  alt="Crafted Fresh Cinnamon Roll"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  src="/images/hero-cinnamon-roll.jpg"
+                  alt="Luxury Handmade Delights - Martin's Roll"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 />
 
                 {/* Floating Glassmorphism Badge 1 */}

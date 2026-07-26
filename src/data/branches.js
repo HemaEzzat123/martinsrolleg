@@ -1,4 +1,18 @@
 export const BRANCHES = [
+    {
+    id: 'sheraton',
+    city: 'Cairo',
+    name: 'Sheraton Branch',
+    address: 'Ahmed El Sheikh, Sheraton Al Matar, El Nozha, Cairo Governorate 4471205',
+    phone: '01118822595',
+    whatsapp: '01118822595',
+    email: 'martisnroll2024@gmail.com',
+    hours: 'Open 24/7',
+    coordinates: { lat: 30.106006, lng: 31.370199 },
+    googleMapEmbed: 'https://maps.google.com/maps?ll=30.106006,31.370199&z=16&t=m&hl=ar&gl=EG&mapclient=embed&cid=13368102955266381375&output=embed',
+    googleReviewUrl: 'https://www.google.com/maps?ll=30.106006,31.370199&z=16&t=m&hl=ar&gl=EG&mapclient=embed&cid=13368102955266381375',
+    isMain: false,
+  },
   {
     id: 'nasr-city',
     city: 'Cairo',
@@ -13,18 +27,5 @@ export const BRANCHES = [
     googleReviewUrl: 'https://www.google.com/maps/place/Martin%E2%80%99s+roll/@30.0595283,31.3394482,17z/data=!3m1!4b1!4m6!3m5!1s0x14583f0037afef81:0x64c54138fbb252aa!8m2!3d30.0595237!4d31.3368733!16s%2Fg%2F11mlq3x9xt?hl=ar&entry=ttu&g_ep=EgoyMDI2MDcxOS4wIKXMDSoASAFQAw%3D%3D',
     isMain: true,
   },
-  {
-    id: 'sheraton',
-    city: 'Cairo',
-    name: 'Sheraton Branch',
-    address: 'Ahmed El Sheikh, Sheraton Al Matar, El Nozha, Cairo Governorate 4471205',
-    phone: '01118822595',
-    whatsapp: '01118822595',
-    email: 'martisnroll2024@gmail.com',
-    hours: 'Open 24/7',
-    coordinates: { lat: 30.106006, lng: 31.370199 },
-    googleMapEmbed: 'https://maps.google.com/maps?ll=30.106006,31.370199&z=16&t=m&hl=ar&gl=EG&mapclient=embed&cid=13368102955266381375&output=embed',
-    googleReviewUrl: 'https://www.google.com/maps?ll=30.106006,31.370199&z=16&t=m&hl=ar&gl=EG&mapclient=embed&cid=13368102955266381375',
-    isMain: false,
-  },
+
 ];
