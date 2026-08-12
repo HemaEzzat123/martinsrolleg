@@ -50,7 +50,7 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
     const newFeedback = {
       id: Date.now(),
       name: data.name,
-      phone: data.phone || '',
+      phone: data.phone,
       orderNumber: data.orderNumber || '',
       serviceType: serviceInfo.nameAr,
       branch: branchInfo.name,
@@ -378,17 +378,26 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
                     {errors.name && <p className="mt-1 text-xs text-red-500 font-semibold">{errors.name.message}</p>}
                   </div>
 
-                  {/* Phone */}
+                  {/* Phone (Required) */}
                   <div>
                     <label className="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">
-                      رقم الهاتف (اختياري)
+                      رقم الهاتف *
                     </label>
                     <input
                       type="tel"
                       placeholder="01118822595"
-                      {...register('phone')}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 text-brand-dark font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors"
+                      {...register('phone', { 
+                        required: 'يرجى إدخال رقم الهاتف',
+                        pattern: {
+                          value: /^[0-9+\s-]{8,15}$/,
+                          message: 'يرجى إدخال رقم هاتف صحيح'
+                        }
+                      })}
+                      className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
+                        errors.phone ? 'border-red-500' : 'border-gray-300'
+                      }`}
                     />
+                    {errors.phone && <p className="mt-1 text-xs text-red-500 font-semibold">{errors.phone.message}</p>}
                   </div>
 
                   {/* Order Number */}

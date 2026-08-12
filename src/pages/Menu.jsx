@@ -8,15 +8,13 @@ import {
   FiZoomIn, 
   FiZoomOut, 
   FiRotateCcw,
-  FiMove,
-  FiGlobe,
-  FiGrid
+  FiMove
 } from 'react-icons/fi';
 import { PRODUCTS } from '../data/products';
 import { PageTransition } from '../components/common/PageTransition';
 
 export const Menu = () => {
-  const [activeLang, setActiveLang] = useState('ar'); // 'ar' or 'en'
+  const [activeMenuSheet, setActiveMenuSheet] = useState('ar'); // 'ar' or 'en'
   const [activeTab, setActiveTab] = useState('full'); // 'full', 'p1', 'p2'
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImageTitle, setSelectedImageTitle] = useState('');
@@ -27,24 +25,19 @@ export const Menu = () => {
   const dragStartRef = useRef({ x: 0, y: 0 });
   const viewportRef = useRef(null);
 
-  const isAr = activeLang === 'ar';
-
   const menuImages = {
     ar: {
       full: {
         src: '/images/menu-pages/menu-ar-full.jpg',
-        title: "قائمة طعام مارتنز رول الرسمية (كاملة)",
-        titleEn: "Martin's Roll Official Menu Sheet (Full)"
+        title: "Martin's Roll Official Arabic Menu (Full)"
       },
       p1: {
         src: '/images/menu-pages/menu-ar-p1.jpg',
-        title: "الصفحة الأولى: المشروبات والقهوة والموهيتو",
-        titleEn: "Page 1: Beverages, Coffee & Mojitos"
+        title: "Page 1: Beverages, Coffee & Mojitos (Arabic)"
       },
       p2: {
         src: '/images/menu-pages/menu-ar-p2.jpg',
-        title: "الصفحة الثانية: السينابوون والكرواسون والحلويات والإفطار",
-        titleEn: "Page 2: Cinnamon Rolls, Croissants, Desserts & Breakfast"
+        title: "Page 2: Cinnamon Rolls, Croissants, Desserts & Breakfast (Arabic)"
       },
       pdfUrl: '/المنيو.pdf',
       pdfName: 'Martins-Roll-Menu-Arabic.pdf'
@@ -52,8 +45,7 @@ export const Menu = () => {
     en: {
       full: {
         src: '/images/menu-pages/menu-full.jpg',
-        title: "Martin's Roll Official English Menu Sheet",
-        titleEn: "Martin's Roll Official English Menu Sheet"
+        title: "Martin's Roll Official English Menu Sheet"
       },
       pdfUrl: '/Martins-Menu.pdf',
       pdfName: 'Martins-Roll-Menu-English.pdf'
@@ -199,11 +191,11 @@ export const Menu = () => {
     return () => el.removeEventListener('wheel', onWheel);
   }, [selectedImage]);
 
-  const currentLangData = menuImages[activeLang];
+  const currentSheetData = menuImages[activeMenuSheet];
 
   return (
     <PageTransition>
-      <div className="relative pt-28 pb-20 bg-brand-cream min-h-screen font-body" dir={isAr ? 'rtl' : 'ltr'}>
+      <div className="relative pt-28 pb-20 bg-brand-cream min-h-screen font-body text-brand-dark" dir="ltr">
         
         {/* Ambient glow backgrounds */}
         <div className="absolute top-1/4 left-10 w-96 h-96 bg-brand-olive/10 rounded-full blur-3xl pointer-events-none" />
@@ -211,62 +203,60 @@ export const Menu = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-10">
 
-          {/* Header & Main Controls */}
+          {/* Header & Menu Sheet Controls */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-brand-olive/15 pb-6">
             
-            <div className="text-center md:text-right">
+            <div>
               <span className="inline-block px-4 py-1 mb-2 text-xs font-bold uppercase tracking-widest text-brand-olive bg-brand-olive/10 rounded-full">
-                {isAr ? 'منيو مارتنز رول الرسمي المصور' : "Martin's Roll Official Menu Preview"}
+                Official Menu Sheet Preview
               </span>
               <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-brand-dark">
-                {isAr ? 'قائمة الطعام و المشروبات' : 'Menu & Drinks Catalog'}
+                Menu & Drinks Catalog
               </h1>
               <p className="mt-2 text-sm sm:text-base text-gray-600 max-w-xl">
-                {isAr 
-                  ? 'عرض منيو مارتنز رول المعتمد بالعربية والأجنبية مع إمكانية التكبير والتحميل بملف PDF.' 
-                  : "View Martin's Roll official menu sheet images in Arabic and English with zoom and PDF download."}
+                View Martin's Roll official menu sheet images in Arabic & English with high-resolution zoom and PDF download.
               </p>
             </div>
 
-            {/* Language Switcher & Dual PDF Download Buttons */}
-            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0" dir="ltr">
+            {/* Menu Sheet Toggle Buttons & PDF Downloads */}
+            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
               
-              {/* Language Selector Buttons */}
+              {/* Sheet Language Switcher */}
               <div className="flex items-center bg-white border border-brand-olive/20 rounded-full p-1 shadow-sm">
                 <button
                   onClick={() => {
-                    setActiveLang('ar');
+                    setActiveMenuSheet('ar');
                     setActiveTab('full');
                   }}
                   className={`px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                    isAr ? 'bg-brand-olive text-white shadow-md' : 'text-gray-600 hover:text-brand-dark'
+                    activeMenuSheet === 'ar' ? 'bg-brand-olive text-white shadow-md' : 'text-gray-600 hover:text-brand-dark'
                   }`}
                 >
-                  العربية 🇪🇬
+                  المنيو العربي 🇪🇬
                 </button>
                 <button
                   onClick={() => {
-                    setActiveLang('en');
+                    setActiveMenuSheet('en');
                     setActiveTab('full');
                   }}
                   className={`px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                    !isAr ? 'bg-brand-olive text-white shadow-md' : 'text-gray-600 hover:text-brand-dark'
+                    activeMenuSheet === 'en' ? 'bg-brand-olive text-white shadow-md' : 'text-gray-600 hover:text-brand-dark'
                   }`}
                 >
-                  English 🇬🇧
+                  English Menu 🇬🇧
                 </button>
               </div>
 
-              {/* PDF Downloads */}
+              {/* PDF Download Buttons */}
               <div className="flex items-center space-x-2">
                 <a
                   href="/المنيو.pdf"
                   download="Martins-Roll-Menu-Arabic.pdf"
                   className="inline-flex items-center space-x-1.5 bg-brand-olive hover:bg-brand-olive-dark text-white px-4 py-2.5 rounded-full text-xs font-bold transition-all shadow-md cursor-pointer"
-                  title="تحميل المنيو العربي PDF"
+                  title="Download Arabic Menu PDF"
                 >
                   <FiDownload className="w-4 h-4" />
-                  <span>{isAr ? 'المنيو العربي PDF' : 'Arabic PDF'}</span>
+                  <span>Arabic PDF</span>
                 </a>
 
                 <a
@@ -276,7 +266,7 @@ export const Menu = () => {
                   title="Download English Menu PDF"
                 >
                   <FiDownload className="w-4 h-4 text-brand-gold" />
-                  <span>{isAr ? 'المنيو الإنجليزي PDF' : 'English PDF'}</span>
+                  <span>English PDF</span>
                 </a>
               </div>
 
@@ -287,8 +277,8 @@ export const Menu = () => {
           {/* Menu Sheet Image Display */}
           <div className="space-y-6">
             
-            {/* Arabic Page Tabs Selector (Only for Arabic menu which has Page 1 & Page 2) */}
-            {isAr && (
+            {/* Page Tabs Selector for Arabic Sheet */}
+            {activeMenuSheet === 'ar' && (
               <div className="flex items-center justify-center sm:justify-start space-x-2 overflow-x-auto pb-2 no-scrollbar">
                 <button
                   onClick={() => setActiveTab('full')}
@@ -298,7 +288,7 @@ export const Menu = () => {
                       : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                   }`}
                 >
-                  المنيو الكامل (تصفح عمودي)
+                  Full Arabic Menu (Stacked View)
                 </button>
                 <button
                   onClick={() => setActiveTab('p1')}
@@ -308,7 +298,7 @@ export const Menu = () => {
                       : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                   }`}
                 >
-                  صفحة 1: القهوة والمشروبات والموهيتو
+                  Page 1: Beverages & Coffee
                 </button>
                 <button
                   onClick={() => setActiveTab('p2')}
@@ -318,42 +308,42 @@ export const Menu = () => {
                       : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                   }`}
                 >
-                  صفحة 2: السينابوون والكرواسون والحلويات والإفطار
+                  Page 2: Pastries, Cinnamon & Breakfast
                 </button>
               </div>
             )}
 
-            {/* Image Preview Cards */}
-            {isAr ? (
+            {/* Menu Sheet Image Viewer Cards */}
+            {activeMenuSheet === 'ar' ? (
               activeTab === 'full' ? (
-                /* Full Stack View for Arabic (Displays both pages clearly stacked) */
+                /* Full Stacked View for Arabic Sheet */
                 <div className="space-y-8">
                   {/* Page 1 */}
                   <div className="relative group rounded-3xl overflow-hidden shadow-xl border border-brand-olive/20 bg-white">
                     <div 
                       className="relative cursor-pointer overflow-hidden flex items-center justify-center bg-gray-50"
-                      onClick={() => openImage(currentLangData.p1.src, currentLangData.p1.title)}
+                      onClick={() => openImage(currentSheetData.p1.src, currentSheetData.p1.title)}
                     >
                       <img
-                        src={currentLangData.p1.src}
-                        alt={currentLangData.p1.title}
+                        src={currentSheetData.p1.src}
+                        alt={currentSheetData.p1.title}
                         className="w-full h-auto object-contain group-hover:scale-[1.01] transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-brand-dark/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <span className="bg-white/95 text-brand-dark px-5 py-2.5 rounded-2xl font-bold text-sm shadow-xl flex items-center space-x-2">
                           <FiEye className="w-5 h-5 text-brand-olive" />
-                          <span>اضغط لتكبير صفحة المشروبات ملء الشاشة</span>
+                          <span>Click to Zoom Beverages Page</span>
                         </span>
                       </div>
                     </div>
                     <div className="p-4 bg-white border-t border-gray-100 flex items-center justify-between text-sm">
-                      <span className="font-bold text-brand-dark">{currentLangData.p1.title}</span>
+                      <span className="font-bold text-brand-dark">{currentSheetData.p1.title}</span>
                       <button
-                        onClick={() => openImage(currentLangData.p1.src, currentLangData.p1.title)}
+                        onClick={() => openImage(currentSheetData.p1.src, currentSheetData.p1.title)}
                         className="inline-flex items-center space-x-1.5 text-xs font-bold text-brand-olive cursor-pointer"
                       >
                         <FiMaximize2 className="w-4 h-4" />
-                        <span>تكبير وتصفح</span>
+                        <span>Expand</span>
                       </button>
                     </div>
                   </div>
@@ -362,59 +352,59 @@ export const Menu = () => {
                   <div className="relative group rounded-3xl overflow-hidden shadow-xl border border-brand-olive/20 bg-white">
                     <div 
                       className="relative cursor-pointer overflow-hidden flex items-center justify-center bg-gray-50"
-                      onClick={() => openImage(currentLangData.p2.src, currentLangData.p2.title)}
+                      onClick={() => openImage(currentSheetData.p2.src, currentSheetData.p2.title)}
                     >
                       <img
-                        src={currentLangData.p2.src}
-                        alt={currentLangData.p2.title}
+                        src={currentSheetData.p2.src}
+                        alt={currentSheetData.p2.title}
                         className="w-full h-auto object-contain group-hover:scale-[1.01] transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-brand-dark/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <span className="bg-white/95 text-brand-dark px-5 py-2.5 rounded-2xl font-bold text-sm shadow-xl flex items-center space-x-2">
                           <FiEye className="w-5 h-5 text-brand-olive" />
-                          <span>اضغط لتكبير صفحة الحلويات والمعجنات ملء الشاشة</span>
+                          <span>Click to Zoom Pastries & Desserts Page</span>
                         </span>
                       </div>
                     </div>
                     <div className="p-4 bg-white border-t border-gray-100 flex items-center justify-between text-sm">
-                      <span className="font-bold text-brand-dark">{currentLangData.p2.title}</span>
+                      <span className="font-bold text-brand-dark">{currentSheetData.p2.title}</span>
                       <button
-                        onClick={() => openImage(currentLangData.p2.src, currentLangData.p2.title)}
+                        onClick={() => openImage(currentSheetData.p2.src, currentSheetData.p2.title)}
                         className="inline-flex items-center space-x-1.5 text-xs font-bold text-brand-olive cursor-pointer"
                       >
                         <FiMaximize2 className="w-4 h-4" />
-                        <span>تكبير وتصفح</span>
+                        <span>Expand</span>
                       </button>
                     </div>
                   </div>
                 </div>
               ) : (
-                /* Single Page Selected View */
+                /* Single Page View for Arabic Sheet */
                 <div className="relative group rounded-3xl overflow-hidden shadow-xl border border-brand-olive/20 bg-white">
                   <div 
                     className="relative cursor-pointer overflow-hidden flex items-center justify-center bg-gray-50"
-                    onClick={() => openImage(currentLangData[activeTab].src, currentLangData[activeTab].title)}
+                    onClick={() => openImage(currentSheetData[activeTab].src, currentSheetData[activeTab].title)}
                   >
                     <img
-                      src={currentLangData[activeTab].src}
-                      alt={currentLangData[activeTab].title}
+                      src={currentSheetData[activeTab].src}
+                      alt={currentSheetData[activeTab].title}
                       className="w-full h-auto object-contain group-hover:scale-[1.01] transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-brand-dark/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <span className="bg-white/95 text-brand-dark px-5 py-2.5 rounded-2xl font-bold text-sm shadow-xl flex items-center space-x-2">
                         <FiEye className="w-5 h-5 text-brand-olive" />
-                        <span>اضغط لتكبير الصورة ملء الشاشة</span>
+                        <span>Click to Zoom & View Fullscreen</span>
                       </span>
                     </div>
                   </div>
                   <div className="p-4 bg-white border-t border-gray-100 flex items-center justify-between text-sm">
-                    <span className="font-bold text-brand-dark">{currentLangData[activeTab].title}</span>
+                    <span className="font-bold text-brand-dark">{currentSheetData[activeTab].title}</span>
                     <button
-                      onClick={() => openImage(currentLangData[activeTab].src, currentLangData[activeTab].title)}
+                      onClick={() => openImage(currentSheetData[activeTab].src, currentSheetData[activeTab].title)}
                       className="inline-flex items-center space-x-1.5 text-xs font-bold text-brand-olive cursor-pointer"
                     >
                       <FiMaximize2 className="w-4 h-4" />
-                      <span>تكبير وتصفح</span>
+                      <span>Expand</span>
                     </button>
                   </div>
                 </div>
@@ -424,11 +414,11 @@ export const Menu = () => {
               <div className="relative group rounded-3xl overflow-hidden shadow-xl border border-brand-olive/20 bg-white">
                 <div 
                   className="relative cursor-pointer overflow-hidden flex items-center justify-center bg-gray-50"
-                  onClick={() => openImage(currentLangData.full.src, currentLangData.full.titleEn)}
+                  onClick={() => openImage(currentSheetData.full.src, currentSheetData.full.title)}
                 >
                   <img
-                    src={currentLangData.full.src}
-                    alt={currentLangData.full.titleEn}
+                    src={currentSheetData.full.src}
+                    alt={currentSheetData.full.title}
                     className="w-full h-auto object-contain group-hover:scale-[1.01] transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-brand-dark/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -439,9 +429,9 @@ export const Menu = () => {
                   </div>
                 </div>
                 <div className="p-4 bg-white border-t border-gray-100 flex items-center justify-between text-sm">
-                  <span className="font-bold text-brand-dark">{currentLangData.full.titleEn}</span>
+                  <span className="font-bold text-brand-dark">{currentSheetData.full.title}</span>
                   <button
-                    onClick={() => openImage(currentLangData.full.src, currentLangData.full.titleEn)}
+                    onClick={() => openImage(currentSheetData.full.src, currentSheetData.full.title)}
                     className="inline-flex items-center space-x-1.5 text-xs font-bold text-brand-olive cursor-pointer"
                   >
                     <FiMaximize2 className="w-4 h-4" />
@@ -453,14 +443,14 @@ export const Menu = () => {
 
           </div>
 
-          {/* Featured Product Photo Gallery */}
+          {/* Product Photo Gallery */}
           <div className="pt-8 space-y-6">
             <div className="flex items-center justify-between border-b border-brand-olive/15 pb-4">
               <h2 className="text-xl sm:text-2xl font-bold font-heading text-brand-dark">
-                {isAr ? 'معرض صور المنتجات الفاخرة' : 'Product Photo Gallery'}
+                Product Photo Gallery
               </h2>
               <span className="text-xs font-medium text-gray-500">
-                {PRODUCTS.length} {isAr ? 'منتج مميز' : 'Featured Delights'}
+                {PRODUCTS.length} Featured Delights
               </span>
             </div>
 
@@ -471,20 +461,20 @@ export const Menu = () => {
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: (index % 12) * 0.03 }}
-                  onClick={() => openImage(product.image, isAr ? product.nameAr : product.nameEn)}
+                  onClick={() => openImage(product.image, product.nameEn)}
                   className="group relative cursor-pointer overflow-hidden rounded-3xl shadow-md hover:shadow-2xl transition-all duration-500 bg-white border border-brand-olive/15"
                 >
                   <div className="aspect-[4/5] w-full overflow-hidden">
                     <img
                       src={product.image}
-                      alt={isAr ? product.nameAr : product.nameEn}
+                      alt={product.nameEn}
                       loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                     />
                   </div>
                   <div className="p-3 text-center bg-white border-t border-gray-100">
                     <p className="text-xs font-bold text-brand-dark line-clamp-1">
-                      {isAr ? product.nameAr : product.nameEn}
+                      {product.nameEn}
                     </p>
                   </div>
                 </motion.div>
@@ -506,21 +496,19 @@ export const Menu = () => {
             <div 
               className="w-full bg-black/80 border-b border-white/10 px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between z-30 text-white shadow-xl gap-2"
               onClick={(e) => e.stopPropagation()}
-              dir="ltr"
             >
               <div className="flex items-center space-x-3">
                 <span className="font-bold text-sm sm:text-base text-gray-100">
                   {selectedImageTitle || "Martin's Roll Menu Sheet"}
                 </span>
                 
-                {/* Download PDF button inside Lightbox */}
                 <a
-                  href={currentLangData.pdfUrl}
-                  download={currentLangData.pdfName}
+                  href={currentSheetData.pdfUrl}
+                  download={currentSheetData.pdfName}
                   className="hidden sm:inline-flex items-center space-x-1.5 bg-[#1B3A2D] hover:bg-[#122A20] text-white px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors shadow-sm cursor-pointer"
                 >
                   <FiDownload className="w-4 h-4 text-amber-400" />
-                  <span>{isAr ? 'تحميل PDF' : 'Download PDF'}</span>
+                  <span>Download PDF</span>
                 </a>
               </div>
 
@@ -620,7 +608,6 @@ export const Menu = () => {
               {/* Floating Pan & Zoom Hint */}
               <div 
                 className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-black/75 backdrop-blur-md border border-white/15 px-4 py-2 rounded-full text-xs text-gray-200 shadow-2xl flex items-center space-x-2 pointer-events-none z-20"
-                dir="ltr"
               >
                 <FiMove className="w-4 h-4 text-amber-400 animate-pulse" />
                 <span>
