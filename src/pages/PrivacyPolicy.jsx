@@ -22,7 +22,7 @@ export const PrivacyPolicy = () => {
             <div className="p-4 sm:p-6 bg-brand-cream/60 rounded-2xl border border-brand-olive/20 flex items-start space-x-4">
               <FiShield className="w-8 h-8 text-brand-olive shrink-0 mt-1" />
               <p className="text-sm font-medium text-brand-dark">
-                Welcome to Martinsroll ("we," "our," or "us"). We are committed
+                Welcome to Martinsroll. We are committed
                 to protecting your personal information and your right to
                 privacy. This Privacy Policy explains how we collect, use,
                 disclose, and safeguard your information when you visit our
