@@ -11,6 +11,8 @@ const B2B = lazy(() => import('../pages/B2B'));
 const Feedback = lazy(() => import('../pages/Feedback'));
 const Careers = lazy(() => import('../pages/Careers'));
 const Contact = lazy(() => import('../pages/Contact'));
+const PrivacyPolicy = lazy(() => import('../pages/PrivacyPolicy'));
+const RefundPolicy = lazy(() => import('../pages/RefundPolicy'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 
 // Automatically scroll to top of window on page navigation
@@ -36,6 +38,8 @@ export const AppRoutes = () => {
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiInstagram, FiFacebook, FiClock, FiMapPin, FiPhone } from 'react-icons/fi';
 import { SiTiktok } from 'react-icons/si';
@@ -81,8 +81,8 @@ export const Footer = () => {
               <li className="flex items-start space-x-3">
                 <FiMapPin className="w-5 h-5 text-brand-gold shrink-0 mt-0.5" />
                 <div className="space-y-1 text-gray-300 font-medium">
-                  <p><strong className="text-white">Sheraton:</strong> <span className="text-gray-400" > Ahmed El Sheikh, Al Nozha, Cairo</span></p>
-                  <p><strong className="text-white">Nasr City:</strong> <span className="text-gray-400">14 Ahmed Kassim Gouda, Abbas El Akkad, Cairo</span> </p>
+                  <p><strong className="text-white">Sheraton:</strong> <span className="text-gray-400">Ahmed El Sheikh, Al Nozha, Cairo</span></p>
+                  <p><strong className="text-white">Nasr City:</strong> <span className="text-gray-400">14 Ahmed Kassim Gouda, Abbas El Akkad, Cairo</span></p>
                 </div>
               </li>
               <li className="flex items-center space-x-3 pt-1">
@@ -107,7 +107,7 @@ export const Footer = () => {
 
         </div>
 
-        {/* Copyright */}
+        {/* Copyright & Legal Links */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-400 gap-4">
           <p>
             © {new Date().getFullYear()} Martins Rolleg. All rights reserved. • Built by{' '}
@@ -120,13 +120,15 @@ export const Footer = () => {
               Engineer 🌀 Ibrahim Ezzat
             </a>
           </p>
-          <div className="flex space-x-6">
-            <Link to="/contact" className="hover:text-gray-200 font-medium">Privacy Policy</Link>
-            <Link to="/contact" className="hover:text-gray-200 font-medium">Terms of Service</Link>
-            <Link to="/b2b" className="hover:text-gray-200 font-medium">Wholesale Terms</Link>
+          <div className="flex flex-wrap space-x-6 gap-y-2">
+            <Link to="/privacy-policy" className="hover:text-brand-gold transition-colors font-medium">Privacy Policy</Link>
+            <Link to="/refund-policy" className="hover:text-brand-gold transition-colors font-medium">Refund Policy</Link>
+            <Link to="/b2b" className="hover:text-brand-gold transition-colors font-medium">Wholesale Terms</Link>
           </div>
         </div>
       </div>
     </footer>
   );
 };
+
+export default Footer;
