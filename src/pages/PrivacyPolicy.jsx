@@ -1,7 +1,7 @@
 import React from "react";
 import { PageTransition } from "../components/common/PageTransition";
 import { SectionTitle } from "../components/common/SectionTitle";
-import { FiShield, FiMail, FiPhone, FiMapPin } from "react-icons/fi";
+import { FiShield, FiMail, FiPhone, FiMapPin, FiTruck } from "react-icons/fi";
 
 export const PrivacyPolicy = () => {
   return (
@@ -175,10 +175,21 @@ export const PrivacyPolicy = () => {
               </p>
             </section>
 
-            {/* 7. Changes to This Privacy Policy */}
+            {/* 7. Shipping & Delivery Policy */}
+            <section className="space-y-3">
+              <h3 className="text-xl font-bold font-heading text-brand-dark border-b border-gray-100 pb-2 flex items-center space-x-2">
+                <FiTruck className="w-5 h-5 text-brand-olive inline" />
+                <span>7. Shipping & Delivery Policy</span>
+              </h3>
+              <p className="text-sm text-gray-700">
+                We are committed to delivering your order fresh and fast. The shipping policy guarantees delivery <strong>within one hour</strong> from order confirmation, subject to traffic conditions and specific delivery zone distances.
+              </p>
+            </section>
+
+            {/* 8. Changes to This Privacy Policy */}
             <section className="space-y-3">
               <h3 className="text-xl font-bold font-heading text-brand-dark border-b border-gray-100 pb-2">
-                7. Changes to This Privacy Policy
+                8. Changes to This Privacy Policy
               </h3>
               <p className="text-sm text-gray-700">
                 We may update this Privacy Policy from time to time in order to
@@ -189,10 +200,10 @@ export const PrivacyPolicy = () => {
               </p>
             </section>
 
-            {/* 8. Contact Us */}
+            {/* 9. Contact Us */}
             <section className="space-y-4 pt-4 border-t border-gray-200">
               <h3 className="text-xl font-bold font-heading text-brand-dark">
-                8. Contact Us
+                9. Contact Us
               </h3>
               <p className="text-sm text-gray-700">
                 If you have questions or comments about this Privacy Policy,
