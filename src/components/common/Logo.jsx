@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 export const Logo = ({ size = 'md', className = '', isLink = true }) => {
   const logoContent = (
-    <div className="flex flex-col items-center sm:items-start text-center sm:text-left select-none">
+    <div className="flex flex-col items-center sm:items-start text-center sm:text-left select-none" dir="ltr">
       
       {/* Main Brand Title: MARTIN'S ROLL */}
-      <div className="flex items-center text-[#2C463D] font-heading font-extrabold tracking-[0.14em] text-xl sm:text-2xl leading-none">
+      <div className="flex items-center text-[#2C463D] font-heading font-extrabold tracking-[0.14em] text-xl sm:text-2xl leading-none" dir="ltr">
         <span>MARTIN'S R</span>
         
         {/* Custom Cinnamon Spiral 'O' Vector */}
@@ -26,7 +26,7 @@ export const Logo = ({ size = 'md', className = '', isLink = true }) => {
       </div>
 
       {/* Tagline: Your Daily Dose Of Delicious */}
-      <span className="text-[10px] sm:text-[11px] font-heading text-[#2C463D] tracking-[0.16em] font-medium mt-1">
+      <span className="text-[10px] sm:text-[11px] font-heading text-[#2C463D] tracking-[0.16em] font-medium mt-1 text-left" dir="ltr">
         Your Daily Dose Of Delicious
       </span>
 
@@ -35,14 +35,14 @@ export const Logo = ({ size = 'md', className = '', isLink = true }) => {
 
   if (!isLink) {
     return (
-      <div className={`inline-flex items-center group ${className}`}>
+      <div className={`inline-flex items-center group ${className}`} dir="ltr">
         {logoContent}
       </div>
     );
   }
 
   return (
-    <Link to="/" className={`inline-flex items-center group focus:outline-none ${className}`}>
+    <Link to="/" className={`inline-flex items-center group focus:outline-none ${className}`} dir="ltr">
       {logoContent}
     </Link>
   );

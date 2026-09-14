@@ -1,6 +1,6 @@
 // Dynamically import all product images from src/assets/menu
 const menuImageModules = import.meta.glob('../assets/menu/*.jpeg', { eager: true, import: 'default' });
-export const MENU_IMAGES = Object.values(menuImageModules);
+export const MENU_IMAGES = Array.from(new Set(Object.values(menuImageModules)));
 
 export const CATEGORIES = [
   { id: 'all', nameEn: 'All Menu', nameAr: 'جميع الأصناف' },
@@ -1279,14 +1279,101 @@ const RAW_PRODUCTS = [
   },
 ];
 
-// Combine each product item with a corresponding image from src/assets/menu
-export const PRODUCTS = RAW_PRODUCTS.map((prod, index) => ({
-  ...prod,
-  id: `menu-item-${index + 1}`,
-  name: prod.nameEn,
-  description: prod.descriptionEn,
-  currency: 'EGP',
-  rating: (4.7 + (index % 4) * 0.08).toFixed(1),
-  reviewsCount: 85 + (index * 7) % 350,
-  image: MENU_IMAGES[index % MENU_IMAGES.length] || 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80',
-}));
+// Specialty Coffee & Beverage photography for coffee/drink items
+const COFFEE_DRINK_IMAGES = [
+  'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80', // Espresso
+  'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=800&q=80', // Latte Art
+  'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=800&q=80', // Cappuccino
+  'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=800&q=80', // Iced Latte
+  'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=800&q=80', // Flat White
+  'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80', // Cold Brew Iced Coffee
+  'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=800&q=80', // Matcha Latte
+  'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=800&q=80', // Spanish Latte
+  'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80', // Milkshake
+  'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=800&q=80', // Hot Chocolate
+  'https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=800&q=80', // V60 Pour Over
+  'https://images.unsplash.com/photo-1587080413959-06b859fb107d?auto=format&fit=crop&w=800&q=80', // Turkish Coffee
+  'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80', // Frappe
+];
+
+// Main 3 Categories requested by Martin's Roll with their dedicated photo banners
+export const MAIN_CATEGORIES = [
+  {
+    id: 'coffee',
+    image: '/cat 1.jpeg',
+    titleKey: 'categoryCoffee',
+    descKey: 'categoryCoffeeDesc',
+    titleEn: 'Coffee',
+    titleAr: 'القهوة والمشروبات',
+    tagEn: 'PREMIUM BEANS',
+    tagAr: 'حبوب فاخرة',
+    sheetAr: '/images/menu-pages/menu-ar-p1.jpg',
+    sheetEn: '/images/menu-pages/menu-panel-1.jpg',
+  },
+  {
+    id: 'pastries',
+    image: '/cat 2.jpeg',
+    titleKey: 'categoryPastries',
+    descKey: 'categoryPastriesDesc',
+    titleEn: 'Pastries',
+    titleAr: 'المخبوزات والكرواسون',
+    tagEn: 'FRESHLY BAKED',
+    tagAr: 'مخبوز طازج',
+    sheetAr: '/images/menu-pages/menu-ar-p2.jpg',
+    sheetEn: '/images/menu-pages/menu-panel-2.jpg',
+  },
+  {
+    id: 'desserts',
+    image: '/cat 3.jpeg',
+    titleKey: 'categoryDesserts',
+    descKey: 'categoryDessertsDesc',
+    titleEn: 'Desserts',
+    titleAr: 'الحلويات الفاخرة',
+    tagEn: 'FRESHLY BAKED',
+    tagAr: 'حلويات فاخرة',
+    sheetAr: '/images/menu-pages/menu-ar-p2.jpg',
+    sheetEn: '/images/menu-pages/menu-panel-3.jpg',
+  },
+];
+
+// Helper to resolve product category to one of the 3 main categories
+export const getMainCategory = (productOrCategory) => {
+  const cat = typeof productOrCategory === 'string' ? productOrCategory : productOrCategory?.category;
+  const nameEn = typeof productOrCategory === 'object' ? productOrCategory?.nameEn?.toLowerCase() || '' : '';
+  
+  if (['hot-coffee', 'iced-coffee-matcha', 'beverages-mojito'].includes(cat)) {
+    return 'coffee';
+  }
+  if (cat === 'cinnamon-croissants' || nameEn.includes('pain suisse') || cat === 'breakfast-salads') {
+    return 'pastries';
+  }
+  return 'desserts';
+};
+
+// Combine each product item with a corresponding image from src/assets/menu or curated drinks
+export const PRODUCTS = RAW_PRODUCTS.map((prod, index) => {
+  const mainCat = getMainCategory(prod);
+  let productImage;
+
+  if (mainCat === 'coffee') {
+    productImage = COFFEE_DRINK_IMAGES[index % COFFEE_DRINK_IMAGES.length];
+  } else if (mainCat === 'pastries') {
+    productImage = MENU_IMAGES[index % Math.floor(MENU_IMAGES.length / 2)] || MENU_IMAGES[0];
+  } else {
+    const half = Math.floor(MENU_IMAGES.length / 2);
+    productImage = MENU_IMAGES[half + (index % (MENU_IMAGES.length - half))] || MENU_IMAGES[0];
+  }
+
+  return {
+    ...prod,
+    id: `menu-item-${index + 1}`,
+    mainCategory: mainCat,
+    name: prod.nameEn,
+    description: prod.descriptionEn,
+    currency: 'EGP',
+    rating: (4.7 + (index % 4) * 0.08).toFixed(1),
+    reviewsCount: 85 + (index * 7) % 350,
+    image: productImage,
+  };
+});
+

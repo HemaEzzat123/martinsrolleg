@@ -1,8 +1,11 @@
 import React from 'react';
 import { PageTransition } from '../components/common/PageTransition';
 import { CateringForm } from '../components/forms/CateringForm';
+import { useLanguage } from '../context/LanguageContext';
 
-export const Catering = () => {
+export const Catering = ({ isSection = false }) => {
+  const { t } = useLanguage();
+
   const eventTowerPhotos = [
     '/images/catering/tower-1.jpg',
     '/images/catering/tower-2.jpg',
@@ -10,16 +13,15 @@ export const Catering = () => {
     '/images/catering/tower-4.jpg',
   ];
 
-  const scrollToForm = (quoteType) => {
+  const scrollToForm = () => {
     const formElement = document.getElementById('catering-form');
     if (formElement) {
       formElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  return (
-    <PageTransition>
-      <div className="relative pt-28 pb-20 bg-[#F8EFE3] text-[#16241F] min-h-screen overflow-hidden">
+  const cateringContent = (
+    <div className={`relative ${isSection ? 'py-14 md:py-20' : 'pt-28 pb-20 min-h-screen'} bg-[#F8EFE3] text-[#16241F] overflow-hidden`}>
         
         {/* Background ambient glow shapes */}
         <div className="absolute top-1/4 left-10 w-96 h-96 bg-brand-olive/10 rounded-full blur-3xl pointer-events-none" />
@@ -30,24 +32,24 @@ export const Catering = () => {
           {/* Header Subtitle */}
           <div className="text-center pt-2 pb-1">
             <h1 className="text-xl md:text-2xl font-bold font-heading text-[#1B3A2D] tracking-wider uppercase">
-              YOUR DAILY DOSE OF DELICIOUS
+              {t('catering.headerSubtitle')}
             </h1>
           </div>
 
           {/* BLOCK 1: CATERING YOUR EVENT? */}
           <div className="shadow-lg rounded-2xl overflow-hidden border border-[#1B3A2D]/15 bg-white">
             <div className="grid grid-cols-1 md:grid-cols-12 items-stretch min-h-[340px]">
-              {/* Left Light Green Text Box */}
-              <div className="md:col-span-5 bg-[#C5E9B4] p-8 md:p-10 lg:p-12 flex flex-col justify-center text-left">
+              {/* Text Box */}
+              <div className="md:col-span-5 bg-[#C5E9B4] p-8 md:p-10 lg:p-12 flex flex-col justify-center text-start">
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold font-heading text-[#1B3A2D] tracking-tight mb-4 uppercase leading-tight">
-                  CATERING YOUR EVENT?
+                  {t('catering.eventTitle')}
                 </h2>
                 <p className="text-xs md:text-sm lg:text-base text-[#16241F]/90 leading-relaxed font-medium">
-                  Transform your special moments into unforgettable experiences with our bespoke catering service. From elegant weddings to corporate gatherings, we craft unique menus and stunning displays that reflect your style and vision. Let us bring the magic of French pastries and gourmet delights to your next celebration.
+                  {t('catering.eventDesc')}
                 </p>
               </div>
 
-              {/* Right Photo collage (4 vertical slices) */}
+              {/* Photo collage */}
               <div className="md:col-span-7 grid grid-cols-4 gap-[2px] bg-white h-64 md:h-auto min-h-[300px]">
                 {eventTowerPhotos.map((photoUrl, idx) => (
                   <div key={idx} className="h-full w-full overflow-hidden bg-gray-100">
@@ -61,25 +63,25 @@ export const Catering = () => {
               </div>
             </div>
 
-            {/* Dark Green Full-Width Button Banner */}
+            {/* Full-Width Button Banner */}
             <button
-              onClick={() => scrollToForm('Event Quote')}
+              onClick={scrollToForm}
               className="w-full bg-[#1B3A2D] hover:bg-[#122A20] active:bg-[#0E2018] text-white py-3.5 px-6 font-semibold font-heading text-sm md:text-base tracking-wide transition-colors duration-200 text-center block cursor-pointer"
             >
-              Request Event Quote
+              {t('catering.eventBtn')}
             </button>
           </div>
 
           {/* BLOCK 2: CATERING FOR BUSINESSES? */}
           <div className="shadow-lg rounded-2xl overflow-hidden border border-[#1B3A2D]/15 bg-white">
             <div className="grid grid-cols-1 md:grid-cols-12 items-stretch min-h-[340px]">
-              {/* Left Light Green Text Box */}
-              <div className="md:col-span-5 bg-[#C5E9B4] p-8 md:p-10 lg:p-12 flex flex-col justify-center text-left">
+              {/* Text Box */}
+              <div className="md:col-span-5 bg-[#C5E9B4] p-8 md:p-10 lg:p-12 flex flex-col justify-center text-start">
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold font-heading text-[#1B3A2D] tracking-tight mb-4 uppercase leading-tight">
-                  CATERING FOR BUSINESSES?
+                  {t('catering.b2bTitle')}
                 </h2>
                 <p className="text-xs md:text-sm lg:text-base text-[#16241F]/90 leading-relaxed font-medium">
-                  Does your F&B business need high quality breads, croissants, tarts, pastries? We got you covered. With multiple solutions such as ready-to-proof, ready-to-bake, par-baked, or ready-to-display solutions we got your business covered.
+                  {t('catering.b2bDesc')}
                 </p>
               </div>
 
@@ -93,12 +95,12 @@ export const Catering = () => {
               </div>
             </div>
 
-            {/* Dark Green Full-Width Button Banner */}
+            {/* Full-Width Button Banner */}
             <button
-              onClick={() => scrollToForm('B2B Quote')}
+              onClick={scrollToForm}
               className="w-full bg-[#1B3A2D] hover:bg-[#122A20] active:bg-[#0E2018] text-white py-3.5 px-6 font-semibold font-heading text-sm md:text-base tracking-wide transition-colors duration-200 text-center block cursor-pointer"
             >
-              Request B2B Quote
+              {t('catering.b2bBtn')}
             </button>
           </div>
 
@@ -109,9 +111,13 @@ export const Catering = () => {
 
         </div>
       </div>
-    </PageTransition>
   );
+
+  if (isSection) {
+    return cateringContent;
+  }
+
+  return <PageTransition>{cateringContent}</PageTransition>;
 };
 
 export default Catering;
-

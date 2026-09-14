@@ -4,9 +4,12 @@ import { FiInstagram, FiFacebook, FiClock, FiMapPin, FiPhone } from 'react-icons
 import { SiTiktok } from 'react-icons/si';
 import { FaWhatsapp } from 'react-icons/fa';
 import { NAV_LINKS } from '../../data/navigation';
+import { useLanguage } from '../../context/LanguageContext';
 import { Logo } from '../common/Logo';
 
 export const Footer = () => {
+  const { t, isAr } = useLanguage();
+
   return (
     <footer className="bg-[#181818] text-gray-300 pt-16 pb-8 border-t border-amber-900/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,9 +21,9 @@ export const Footer = () => {
               <Logo />
             </div>
             <p className="text-sm text-gray-300 leading-relaxed font-medium">
-              Crafted fresh every single day. Gourmet cinnamon rolls, fluffy brioche donuts, waffle towers, and artisanal coffee blends made for true bakery lovers.
+              {t('footer.tagline', 'Crafted fresh every single day. Gourmet cinnamon rolls, fluffy brioche donuts, waffle towers, and artisanal coffee blends made for true bakery lovers.')}
             </p>
-            <div className="flex space-x-3 pt-2">
+            <div className="flex items-center gap-3 pt-2">
               <a
                 href="https://www.instagram.com/martinsroll1?fbclid=IwY2xjawTNq-lleHRuA2FlbQIxMABicmlkETEwU2l6QngwdWV1SGJzT0hsc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHqhaZfihGl0UAQek3iiPCPZLRNHQaXgYAiU7M4Hyxfte4yRMdI9EF_3W0gNX_aem_pTgolNMXXPwaDW4VqxzN1w"
                 target="_blank"
@@ -53,54 +56,83 @@ export const Footer = () => {
 
           {/* Quick Links (Two Columns Grid) */}
           <div className="lg:col-span-1">
-            <h3 className="text-white text-lg font-bold font-heading mb-4">Quick Links</h3>
+            <h3 className="text-white text-lg font-bold font-heading mb-4">
+              {t('footer.quickLinks', 'Quick Links')}
+            </h3>
             <ul className="grid grid-cols-2 gap-x-6 gap-y-2.5">
-              {NAV_LINKS.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-sm text-gray-300 hover:text-brand-gold transition-colors inline-block font-medium"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+              {NAV_LINKS.map((link) => {
+                const displayName = isAr ? link.nameAr : link.nameEn;
+                return (
+                  <li key={link.id || link.path}>
+                    <a
+                      href={link.path}
+                      onClick={(e) => {
+                        if (window.location.pathname === '/') {
+                          e.preventDefault();
+                          const el = document.getElementById(link.id);
+                          if (el) {
+                            el.scrollIntoView({ behavior: 'smooth' });
+                            window.history.pushState(null, '', link.path);
+                          }
+                        }
+                      }}
+                      className="text-sm text-gray-300 hover:text-brand-gold transition-colors inline-block font-medium cursor-pointer"
+                    >
+                      {displayName}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
           {/* Opening Hours & Contact */}
           <div className="lg:col-span-2">
-            <h3 className="text-white text-lg font-bold font-heading mb-4">Store & Hours</h3>
+            <h3 className="text-white text-lg font-bold font-heading mb-4">
+              {t('footer.storeAndHours', 'Store & Hours')}
+            </h3>
             <ul className="space-y-3.5 text-sm text-gray-300">
-              <li className="flex items-start space-x-3">
+              <li className="flex items-start gap-3">
                 <FiClock className="w-5 h-5 text-brand-gold shrink-0 mt-0.5" />
                 <span className="text-gray-200">
-                  <strong className="text-white">Hours:</strong> Open 24/7
+                  <strong className="text-white">{t('footer.hoursTitle', 'Hours:')}</strong> {t('footer.open247', 'Open 24/7')}
                 </span>
               </li>
-              <li className="flex items-start space-x-3">
+              <li className="flex items-start gap-3">
                 <FiMapPin className="w-5 h-5 text-brand-gold shrink-0 mt-0.5" />
                 <div className="space-y-1 text-gray-300 font-medium">
-                  <p><strong className="text-white">Sheraton:</strong> <span className="text-gray-400">Ahmed El Sheikh, Al Nozha, Cairo</span></p>
-                  <p><strong className="text-white">Nasr City:</strong> <span className="text-gray-400">14 Ahmed Kassim Gouda, Abbas El Akkad, Cairo</span></p>
+                  <p><strong className="text-white">{isAr ? 'شيراتون:' : 'Sheraton:'}</strong> <span className="text-gray-400">{isAr ? 'أحمد الشيخ، شيراتون المطار، النزهة، القاهرة' : 'Ahmed El Sheikh, Al Nozha, Cairo'}</span></p>
+        
                 </div>
               </li>
-              <li className="flex items-center space-x-3 pt-1">
-                <FaWhatsapp className="w-5 h-5 text-emerald-400 shrink-0" />
-                <a
-                  href="https://wa.me/201118822595"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-emerald-400 text-gray-100 transition-colors font-bold"
-                >
-                  WhatsApp: 01118822595
-                </a>
+              <li className="flex items-start gap-3 pt-1">
+                <FaWhatsapp className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+                <div className="space-y-1 text-gray-300 font-medium">
+                  <p>
+                    <strong className="text-white">{isAr ? 'واتساب شيراتون:' : 'Sheraton WhatsApp:'}</strong>{' '}
+                    <a
+                      href="https://wa.me/201118822595"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-emerald-400 text-gray-100 transition-colors font-bold inline-block"
+                      dir="ltr"
+                    >
+                      01118822595
+                    </a>
+                  </p>
+
+                </div>
               </li>
-              <li className="flex items-center space-x-3">
-                <FiPhone className="w-5 h-5 text-brand-gold shrink-0" />
-                <a href="tel:01118822595" className="hover:text-brand-gold text-gray-200 transition-colors font-bold">
-                  Call: 01118822595
-                </a>
+              <li className="flex items-start gap-3">
+                <FiPhone className="w-5 h-5 text-brand-gold shrink-0 mt-0.5" />
+                <div className="space-y-1 text-gray-300 font-medium">
+                  <p>
+                    <strong className="text-white">{isAr ? 'شيراتون:' : 'Sheraton:'}</strong>{' '}
+                    <a href="tel:01118822595" className="hover:text-brand-gold text-gray-200 transition-colors font-bold inline-block" dir="ltr">
+                      01118822595
+                    </a>
+                  </p>
+                </div>
               </li>
             </ul>
           </div>
@@ -110,7 +142,7 @@ export const Footer = () => {
         {/* Copyright & Legal Links */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-400 gap-4">
           <p>
-            © {new Date().getFullYear()} Martins Rolleg. All rights reserved. • Built by{' '}
+            © {new Date().getFullYear()} Martins Rolleg. {t('footer.allRightsReserved', 'All rights reserved.')} • {t('footer.builtBy', 'Built by')}{' '}
             <a
               href="https://ibrahim-ezzat.vercel.app/"
               target="_blank"
@@ -120,10 +152,16 @@ export const Footer = () => {
               Engineer 🌀 Ibrahim Ezzat
             </a>
           </p>
-          <div className="flex flex-wrap space-x-6 gap-y-2">
-            <Link to="/privacy-policy" className="hover:text-brand-gold transition-colors font-medium">Privacy Policy</Link>
-            <Link to="/refund-policy" className="hover:text-brand-gold transition-colors font-medium">Refund Policy</Link>
-            <Link to="/b2b" className="hover:text-brand-gold transition-colors font-medium">Wholesale Terms</Link>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <Link to="/privacy-policy" className="hover:text-brand-gold transition-colors font-medium">
+              {t('footer.privacyPolicy', 'Privacy Policy')}
+            </Link>
+            <Link to="/refund-policy" className="hover:text-brand-gold transition-colors font-medium">
+              {t('footer.refundPolicy', 'Refund Policy')}
+            </Link>
+            <Link to="/b2b" className="hover:text-brand-gold transition-colors font-medium">
+              {t('footer.wholesaleTerms', 'Wholesale Terms')}
+            </Link>
           </div>
         </div>
       </div>

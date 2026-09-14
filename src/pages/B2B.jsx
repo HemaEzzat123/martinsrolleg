@@ -5,25 +5,17 @@ import { PageTransition } from '../components/common/PageTransition';
 import { SectionTitle } from '../components/common/SectionTitle';
 import { B2BForm } from '../components/forms/B2BForm';
 import { Button } from '../components/common/Button';
+import { useLanguage } from '../context/LanguageContext';
 
-const WORK_WITH = [
-  { name: 'Cafes', desc: 'Specialty coffee shops looking for daily fresh cinnamon roll deliveries.' },
-  { name: 'Restaurants', desc: 'Fine dining and casual eateries adding gourmet desserts to their menu.' },
-  { name: 'Supermarkets', desc: 'Retail grocery stores and bakery aisles.' },
-  { name: 'Services', desc: 'Catering companies and hospitality service providers.' },
-];
+const SERVICE_ICONS = [FiShoppingBag, FiBox, FiLayers, FiCheck];
 
-const SERVICES = [
-  { icon: FiShoppingBag, name: 'Wholesale', desc: 'Daily or weekly fresh baked bulk deliveries.' },
-  { icon: FiBox, name: 'Frozen Products', desc: 'Bake-off frozen rolls ready for hot baking in your store.' },
-  { icon: FiLayers, name: 'Private Label', desc: 'Custom branded packaging tailored for your brand.' },
-  { icon: FiCheck, name: 'Corporate Orders', desc: 'Custom recurring snacks and gift boxes for companies.' },
-];
+export const B2B = ({ isSection = false }) => {
+  const { t } = useLanguage();
+  const workWithList = t('b2b.workWith');
+  const servicesList = t('b2b.services');
 
-export const B2B = () => {
-  return (
-    <PageTransition>
-      <div className="relative pt-32 pb-20 bg-brand-cream text-brand-dark min-h-screen overflow-hidden">
+  const b2bContent = (
+    <div className={`relative ${isSection ? 'py-14 md:py-20' : 'pt-32 pb-20 min-h-screen'} bg-brand-cream text-brand-dark overflow-hidden`}>
         
         {/* Background ambient glow shapes matching Home page */}
         <div className="absolute top-1/4 left-10 w-96 h-96 bg-brand-olive/10 rounded-full blur-3xl pointer-events-none" />
@@ -34,16 +26,16 @@ export const B2B = () => {
           {/* Hero */}
           <div className="text-center mb-16">
             <SectionTitle
-              badge="B2B & Wholesale"
-              title="Business Partnerships"
-              subtitle="Supply your cafes, restaurants, or events with Martins Roll gourmet baked pastries."
+              badge={t('b2b.badge')}
+              title={t('b2b.title')}
+              subtitle={t('b2b.subtitle')}
             />
 
             {/* We Work With Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto mt-6 mb-12">
-              {WORK_WITH.map((item, idx) => (
+              {Array.isArray(workWithList) && workWithList.map((item, idx) => (
                 <motion.div
-                  key={item.name}
+                  key={item.name || idx}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -63,7 +55,7 @@ export const B2B = () => {
             <div className="flex justify-center">
               <a href="#b2b-form">
                 <Button variant="primary" size="lg" icon={FiArrowDown}>
-                  Contact B2B Team
+                  {t('b2b.contactBtn')}
                 </Button>
               </a>
             </div>
@@ -72,11 +64,11 @@ export const B2B = () => {
           {/* Services Grid */}
           <div className="mb-20">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {SERVICES.map((s, idx) => {
-                const Icon = s.icon;
+              {Array.isArray(servicesList) && servicesList.map((s, idx) => {
+                const Icon = SERVICE_ICONS[idx % SERVICE_ICONS.length];
                 return (
                   <motion.div
-                    key={s.name}
+                    key={s.name || idx}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -101,17 +93,22 @@ export const B2B = () => {
           {/* Application Form */}
           <div id="b2b-form" className="max-w-3xl mx-auto">
             <SectionTitle
-              badge="Wholesale Order"
-              title="Request Wholesale Quote"
-              subtitle="Fill in your business inquiry details below and our corporate partnership manager will respond promptly."
+              badge={t('b2b.formBadge')}
+              title={t('b2b.formTitle')}
+              subtitle={t('b2b.formSubtitle')}
             />
             <B2BForm />
           </div>
 
         </div>
       </div>
-    </PageTransition>
   );
+
+  if (isSection) {
+    return b2bContent;
+  }
+
+  return <PageTransition>{b2bContent}</PageTransition>;
 };
 
 export default B2B;

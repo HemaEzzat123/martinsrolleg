@@ -4,8 +4,10 @@ import { motion } from 'framer-motion';
 import { FiCheckCircle } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { Button } from '../common/Button';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const FranchiseForm = () => {
+  const { t, isAr } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
@@ -40,10 +42,10 @@ export const FranchiseForm = () => {
         >
           <FiCheckCircle className="w-16 h-16 text-brand-gold mx-auto mb-4" />
           <h3 className="text-2xl font-bold font-heading text-brand-dark">
-            Application Sent!
+            {t('franchise.form.successTitle')}
           </h3>
-          <p className="mt-2 text-gray-600 max-w-md mx-auto text-sm">
-            Opening WhatsApp to complete your franchise application.
+          <p className="mt-2 text-gray-600 max-w-md mx-auto text-sm leading-relaxed">
+            {t('franchise.form.successDesc')}
           </p>
         </motion.div>
       ) : (
@@ -53,12 +55,12 @@ export const FranchiseForm = () => {
             {/* Full Name */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Full Name *
+                {t('franchise.form.fullNameLabel')}
               </label>
               <input
                 type="text"
-                placeholder="Your Full Name"
-                {...register('fullName', { required: 'Full name is required' })}
+                placeholder={t('franchise.form.fullNamePlaceholder')}
+                {...register('fullName', { required: t('franchise.form.fullNameRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
                   errors.fullName ? 'border-red-500' : 'border-gray-200'
                 }`}
@@ -69,12 +71,12 @@ export const FranchiseForm = () => {
             {/* Country */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Country *
+                {t('franchise.form.countryLabel')}
               </label>
               <input
                 type="text"
-                placeholder="Country"
-                {...register('country', { required: 'Country is required' })}
+                placeholder={t('franchise.form.countryPlaceholder')}
+                {...register('country', { required: t('franchise.form.countryRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
                   errors.country ? 'border-red-500' : 'border-gray-200'
                 }`}
@@ -85,12 +87,12 @@ export const FranchiseForm = () => {
             {/* City */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                City *
+                {t('franchise.form.cityLabel')}
               </label>
               <input
                 type="text"
-                placeholder="City"
-                {...register('city', { required: 'City is required' })}
+                placeholder={t('franchise.form.cityPlaceholder')}
+                {...register('city', { required: t('franchise.form.cityRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
                   errors.city ? 'border-red-500' : 'border-gray-200'
                 }`}
@@ -101,12 +103,13 @@ export const FranchiseForm = () => {
             {/* Phone */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Phone *
+                {t('franchise.form.phoneLabel')}
               </label>
               <input
                 type="tel"
-                placeholder="01118822595"
-                {...register('phone', { required: 'Phone is required' })}
+                placeholder={t('franchise.form.phonePlaceholder')}
+                dir="ltr"
+                {...register('phone', { required: t('franchise.form.phoneRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
                   errors.phone ? 'border-red-500' : 'border-gray-200'
                 }`}
@@ -117,12 +120,13 @@ export const FranchiseForm = () => {
             {/* Email */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Email *
+                {t('franchise.form.emailLabel')}
               </label>
               <input
                 type="email"
-                placeholder="Email Address"
-                {...register('email', { required: 'Email is required', pattern: /^\S+@\S+$/i })}
+                placeholder={t('franchise.form.emailPlaceholder')}
+                dir="ltr"
+                {...register('email', { required: t('franchise.form.emailRequired'), pattern: /^\S+@\S+$/i })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
                   errors.email ? 'border-red-500' : 'border-gray-200'
                 }`}
@@ -133,12 +137,12 @@ export const FranchiseForm = () => {
             {/* Investment Budget */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Investment Budget *
+                {t('franchise.form.budgetLabel')}
               </label>
               <input
                 type="text"
-                placeholder="Target Budget (e.g. $100k - $250k)"
-                {...register('investmentBudget', { required: 'Investment budget is required' })}
+                placeholder={t('franchise.form.budgetPlaceholder')}
+                {...register('investmentBudget', { required: t('franchise.form.budgetRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
                   errors.investmentBudget ? 'border-red-500' : 'border-gray-200'
                 }`}
@@ -151,12 +155,12 @@ export const FranchiseForm = () => {
           {/* Experience */}
           <div>
             <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-              Experience *
+              {t('franchise.form.experienceLabel')}
             </label>
             <textarea
               rows="4"
-              placeholder="Tell us about your business or food & beverage experience..."
-              {...register('experience', { required: 'Experience information is required' })}
+              placeholder={t('franchise.form.experiencePlaceholder')}
+              {...register('experience', { required: t('franchise.form.experienceRequired') })}
               className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold transition-colors ${
                 errors.experience ? 'border-red-500' : 'border-gray-200'
               }`}
@@ -165,10 +169,12 @@ export const FranchiseForm = () => {
           </div>
 
           <Button type="submit" variant="gold" size="lg" fullWidth icon={FaWhatsapp}>
-            Apply Now via WhatsApp
+            {t('franchise.form.submitBtn')}
           </Button>
         </form>
       )}
     </div>
   );
 };
+
+export default FranchiseForm;

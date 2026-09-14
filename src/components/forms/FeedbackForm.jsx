@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   FiStar, 
   FiCheckCircle, 
@@ -9,22 +9,23 @@ import {
   FiExternalLink,
   FiShoppingBag,
   FiTruck,
-  FiCoffee,
   FiArrowRight,
   FiArrowLeft
 } from 'react-icons/fi';
 import { FaCarSide, FaUtensils } from 'react-icons/fa';
 import { BRANCHES } from '../../data/branches';
 import { Button } from '../common/Button';
+import { useLanguage } from '../../context/LanguageContext';
 
 const SERVICE_TYPES = [
-  { id: 'dine-in', nameAr: 'صالة الفرع (Dine-in)', nameEn: 'Dine-in / In Branch', icon: FaUtensils, desc: 'تناول الطعام داخل الفرع' },
-  { id: 'takeaway', nameAr: 'تيك أواي / سفري (Takeaway)', nameEn: 'Takeaway', icon: FiShoppingBag, desc: 'استلام الطلب من الفرع' },
-  { id: 'delivery', nameAr: 'ديلفري / توصيل (Delivery)', nameEn: 'Delivery', icon: FiTruck, desc: 'توصيل الطلب حتى باب المنزل' },
-  { id: 'car-pickup', nameAr: 'توصيل للسيارة (Car Pick-up)', nameEn: 'Car Pick-up', icon: FaCarSide, desc: 'استلام الطلب في السيارة' },
+  { id: 'dine-in', nameAr: 'صالة الفرع (Dine-in)', nameEn: 'Dine-in / In Branch', icon: FaUtensils, descAr: 'تناول الطعام داخل الفرع', descEn: 'Eating inside the branch' },
+  { id: 'takeaway', nameAr: 'تيك أواي / سفري (Takeaway)', nameEn: 'Takeaway', icon: FiShoppingBag, descAr: 'استلام الطلب من الفرع', descEn: 'Picking up order from counter' },
+  { id: 'delivery', nameAr: 'ديلفري / توصيل (Delivery)', nameEn: 'Delivery', icon: FiTruck, descAr: 'توصيل الطلب حتى باب المنزل', descEn: 'Delivered to your doorstep' },
+  { id: 'car-pickup', nameAr: 'توصيل للسيارة (Car Pick-up)', nameEn: 'Car Pick-up', icon: FaCarSide, descAr: 'استلام الطلب في السيارة', descEn: 'Order served directly to car' },
 ];
 
 export const FeedbackForm = ({ onFeedbackSubmit }) => {
+  const { t, isAr } = useLanguage();
   const [step, setStep] = useState(1); // Step 1: Service Type, Step 2: Branch, Step 3: Ratings & Comments
   const [serviceType, setServiceType] = useState('dine-in');
   const [selectedBranch, setSelectedBranch] = useState('sheraton');
@@ -52,13 +53,13 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
       name: data.name,
       phone: data.phone,
       orderNumber: data.orderNumber || '',
-      serviceType: serviceInfo.nameAr,
+      serviceType: isAr ? serviceInfo.nameAr : serviceInfo.nameEn,
       branch: branchInfo.name,
       rating: overallRating,
       foodRating,
       speedRating,
       comment: data.message,
-      date: 'الآن (Just now)',
+      date: isAr ? 'الآن' : 'Just now',
       createdAt: new Date().toISOString(),
     };
 
@@ -90,10 +91,10 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
       {/* Google Reviews Direct Action Buttons - Deep Brand Olive Card */}
       <div className="bg-[#2C463D] text-white p-6 md:p-8 rounded-3xl shadow-xl border border-[#2C463D]/30 text-center">
         <h4 className="text-xl font-extrabold font-heading text-[#F8EFE3] mb-1">
-          Leave a Google Review ⭐
+          {t('feedback.googleCardTitle')}
         </h4>
-        <p className="text-sm text-[#F8EFE3]/90 mb-5 font-medium">
-          أحببت تجربتك معنا؟ اترك تقييمك لفرعك المفضل على خرائط جوجل!
+        <p className="text-sm text-[#F8EFE3]/90 mb-5 font-medium leading-relaxed">
+          {t('feedback.googleCardDesc')}
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -103,11 +104,11 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
               href={b.googleReviewUrl}
               target="_blank"
               rel="noreferrer"
-              className="w-full sm:w-auto px-6 py-3 bg-[#F8EFE3] hover:bg-white text-[#2C463D] rounded-full text-xs font-extrabold flex items-center justify-center space-x-2 shadow-md transition-all transform hover:scale-105 cursor-pointer"
+              className="w-full sm:w-auto px-6 py-3 bg-[#F8EFE3] hover:bg-white text-[#2C463D] rounded-full text-xs font-extrabold flex items-center justify-center gap-2 shadow-md transition-all transform hover:scale-105 cursor-pointer"
             >
-              <FiMapPin className="w-4 h-4 text-[#B88236]" />
-              <span>تقييم {b.name} على Google</span>
-              <FiExternalLink className="w-3.5 h-3.5" />
+              <FiMapPin className="w-4 h-4 text-[#B88236] shrink-0" />
+              <span>{isAr ? `تقييم ${b.name} على Google` : `Review ${b.name} on Google`}</span>
+              <FiExternalLink className="w-3.5 h-3.5 shrink-0" />
             </a>
           ))}
         </div>
@@ -120,9 +121,15 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
         {!submitted && (
           <div className="mb-8">
             <div className="flex items-center justify-between text-xs font-bold text-gray-500 mb-2">
-              <span className={step >= 1 ? 'text-brand-olive font-extrabold' : ''}>1. مكان الخدمة</span>
-              <span className={step >= 2 ? 'text-brand-olive font-extrabold' : ''}>2. اختيار الفرع</span>
-              <span className={step >= 3 ? 'text-brand-olive font-extrabold' : ''}>3. تقييم التجربة والملاحظات</span>
+              <span className={step >= 1 ? 'text-brand-olive font-extrabold' : ''}>
+                {isAr ? '1. مكان الخدمة' : '1. Service Type'}
+              </span>
+              <span className={step >= 2 ? 'text-brand-olive font-extrabold' : ''}>
+                {isAr ? '2. اختيار الفرع' : '2. Branch'}
+              </span>
+              <span className={step >= 3 ? 'text-brand-olive font-extrabold' : ''}>
+                {isAr ? '3. التقييم والملاحظات' : '3. Ratings & Notes'}
+              </span>
             </div>
             <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
               <div 
@@ -141,10 +148,10 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
           >
             <FiCheckCircle className="w-16 h-16 text-[#2C463D] mx-auto mb-4" />
             <h3 className="text-2xl font-bold font-heading text-[#16241F]">
-              شكراً لك على تقييمك القيم!
+              {t('feedback.form.successTitle')}
             </h3>
             <p className="mt-2 text-[#2D423A] text-sm font-medium">
-              تم تسجيل ملاحظاتك وتقييمك بنجاح ونقدر جداً وقتك في مشاركة تجربتك معنا.
+              {t('feedback.form.successDesc')}
             </p>
           </motion.div>
         ) : (
@@ -153,19 +160,19 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
             {/* STEP 1: Service Type Selection */}
             {step === 1 && (
               <motion.div
-                initial={{ opacity: 0, x: -10 }}
+                initial={{ opacity: 0, x: isAr ? 10 : -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 className="space-y-6"
               >
                 <div className="text-center">
                   <span className="text-xs font-bold uppercase tracking-widest text-brand-olive bg-brand-olive/10 px-3 py-1 rounded-full">
-                    الخطوة الأولى
+                    {isAr ? 'الخطوة الأولى' : 'Step 1'}
                   </span>
                   <h3 className="text-2xl font-extrabold font-heading text-brand-dark mt-2">
-                    أين تم تقديم الخدمة لك؟
+                    {isAr ? 'أين تم تقديم الخدمة لك؟' : 'Where was your order served?'}
                   </h3>
                   <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                    اختر كيفية تلقيك للطلب من مارتنز رول
+                    {isAr ? 'اختر كيفية تلقيك للطلب من مارتنز رول' : 'Select how you enjoyed Martin’s Roll'}
                   </p>
                 </div>
 
@@ -177,7 +184,7 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
                       <div
                         key={st.id}
                         onClick={() => setServiceType(st.id)}
-                        className={`p-5 rounded-2xl border-2 transition-all cursor-pointer flex items-center space-x-4 ${
+                        className={`p-5 rounded-2xl border-2 transition-all cursor-pointer flex items-center gap-4 ${
                           isSelected
                             ? 'border-brand-olive bg-brand-cream/60 shadow-md'
                             : 'border-gray-200 bg-gray-50 hover:border-gray-300'
@@ -188,9 +195,9 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
                         }`}>
                           <Icon className="w-6 h-6" />
                         </div>
-                        <div className="text-right">
-                          <h4 className="text-base font-bold text-brand-dark">{st.nameAr}</h4>
-                          <p className="text-xs text-gray-500 mt-0.5">{st.desc}</p>
+                        <div className="text-start">
+                          <h4 className="text-base font-bold text-brand-dark">{isAr ? st.nameAr : st.nameEn}</h4>
+                          <p className="text-xs text-gray-500 mt-0.5">{isAr ? st.descAr : st.descEn}</p>
                         </div>
                       </div>
                     );
@@ -202,9 +209,9 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
                     variant="primary"
                     size="md"
                     onClick={handleNextStep}
-                    icon={FiArrowRight}
+                    icon={isAr ? FiArrowLeft : FiArrowRight}
                   >
-                    التالي: اختيار الفرع
+                    {isAr ? 'التالي: اختيار الفرع' : 'Next: Select Branch'}
                   </Button>
                 </div>
               </motion.div>
@@ -213,19 +220,19 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
             {/* STEP 2: Branch Selection */}
             {step === 2 && (
               <motion.div
-                initial={{ opacity: 0, x: -10 }}
+                initial={{ opacity: 0, x: isAr ? 10 : -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 className="space-y-6"
               >
                 <div className="text-center">
                   <span className="text-xs font-bold uppercase tracking-widest text-brand-olive bg-brand-olive/10 px-3 py-1 rounded-full">
-                    الخطوة الثانية
+                    {isAr ? 'الخطوة الثانية' : 'Step 2'}
                   </span>
                   <h3 className="text-2xl font-extrabold font-heading text-brand-dark mt-2">
-                    في أي فرع كانت تجربتك؟
+                    {isAr ? 'في أي فرع كانت تجربتك؟' : 'Which branch did you visit?'}
                   </h3>
                   <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                    حدد الفرع الخاص بطلبك
+                    {isAr ? 'حدد الفرع الخاص بطلبك' : 'Choose your target store location'}
                   </p>
                 </div>
 
@@ -254,19 +261,19 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
                   <button
                     type="button"
                     onClick={handlePrevStep}
-                    className="inline-flex items-center space-x-2 text-sm font-bold text-gray-600 hover:text-brand-dark cursor-pointer"
+                    className="inline-flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-brand-dark cursor-pointer"
                   >
-                    <FiArrowLeft className="w-4 h-4" />
-                    <span>السابق</span>
+                    {isAr ? <FiArrowRight className="w-4 h-4" /> : <FiArrowLeft className="w-4 h-4" />}
+                    <span>{t('feedback.form.prevStep')}</span>
                   </button>
 
                   <Button
                     variant="primary"
                     size="md"
                     onClick={handleNextStep}
-                    icon={FiArrowRight}
+                    icon={isAr ? FiArrowLeft : FiArrowRight}
                   >
-                    التالي: تقييم التجربة
+                    {isAr ? 'التالي: تقييم التجربة' : 'Next: Rate Experience'}
                   </Button>
                 </div>
               </motion.div>
@@ -275,19 +282,19 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
             {/* STEP 3: Ratings, Guest Info & Comments */}
             {step === 3 && (
               <motion.div
-                initial={{ opacity: 0, x: -10 }}
+                initial={{ opacity: 0, x: isAr ? 10 : -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 className="space-y-6"
               >
                 <div className="text-center border-b border-gray-100 pb-4">
                   <span className="text-xs font-bold uppercase tracking-widest text-brand-olive bg-brand-olive/10 px-3 py-1 rounded-full">
-                    الخطوة الأخيرة
+                    {isAr ? 'الخطوة الأخيرة' : 'Final Step'}
                   </span>
                   <h3 className="text-2xl font-extrabold font-heading text-brand-dark mt-2">
-                    كيف كانت تجربتك معنا؟
+                    {isAr ? 'كيف كانت تجربتك معنا؟' : 'How was your experience?'}
                   </h3>
                   <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                    يرجى تقديم تقييمك وإبداء ملاحظاتك
+                    {isAr ? 'يرجى تقديم تقييمك وإبداء ملاحظاتك' : 'Please provide your ratings & comments'}
                   </p>
                 </div>
 
@@ -296,8 +303,10 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
                   
                   {/* 1. Overall Experience */}
                   <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pb-3 border-b border-gray-200">
-                    <span className="text-sm font-bold text-brand-dark">1. التقييم العام للتجربة:</span>
-                    <div className="flex items-center space-x-1" dir="ltr">
+                    <span className="text-sm font-bold text-brand-dark">
+                      {isAr ? '1. التقييم العام للتجربة:' : '1. Overall Experience:'}
+                    </span>
+                    <div className="flex items-center gap-1" dir="ltr">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <button
                           key={star}
@@ -317,8 +326,10 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
 
                   {/* 2. Food & Pastry Quality */}
                   <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pb-3 border-b border-gray-200">
-                    <span className="text-sm font-bold text-brand-dark">2. جودة المأكولات والمشروبات:</span>
-                    <div className="flex items-center space-x-1" dir="ltr">
+                    <span className="text-sm font-bold text-brand-dark">
+                      {isAr ? '2. جودة المأكولات والمشروبات:' : '2. Food & Beverage Quality:'}
+                    </span>
+                    <div className="flex items-center gap-1" dir="ltr">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <button
                           key={star}
@@ -338,8 +349,10 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
 
                   {/* 3. Speed & Service Quality */}
                   <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
-                    <span className="text-sm font-bold text-brand-dark">3. سرعة الخدمة وتوفير الطلب:</span>
-                    <div className="flex items-center space-x-1" dir="ltr">
+                    <span className="text-sm font-bold text-brand-dark">
+                      {isAr ? '3. سرعة الخدمة وتوفير الطلب:' : '3. Service Speed & Hospitality:'}
+                    </span>
+                    <div className="flex items-center gap-1" dir="ltr">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <button
                           key={star}
@@ -365,12 +378,12 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
                   {/* Name */}
                   <div>
                     <label className="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">
-                      الاسم الكامل *
+                      {t('feedback.form.nameLabel')}
                     </label>
                     <input
                       type="text"
-                      placeholder="اسمك الكريم"
-                      {...register('name', { required: 'يرجى إدخال الاسم' })}
+                      placeholder={isAr ? 'اسمك الكريم' : 'Your name'}
+                      {...register('name', { required: t('feedback.form.nameRequired') })}
                       className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
                         errors.name ? 'border-red-500' : 'border-gray-300'
                       }`}
@@ -381,16 +394,17 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
                   {/* Phone (Required) */}
                   <div>
                     <label className="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">
-                      رقم الهاتف *
+                      {t('feedback.form.phoneLabel')}
                     </label>
                     <input
                       type="tel"
                       placeholder="01118822595"
+                      dir="ltr"
                       {...register('phone', { 
-                        required: 'يرجى إدخال رقم الهاتف',
+                        required: isAr ? 'يرجى إدخال رقم الهاتف' : 'Phone is required',
                         pattern: {
                           value: /^[0-9+\s-]{8,15}$/,
-                          message: 'يرجى إدخال رقم هاتف صحيح'
+                          message: isAr ? 'يرجى إدخال رقم هاتف صحيح' : 'Please enter valid phone'
                         }
                       })}
                       className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
@@ -403,11 +417,12 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
                   {/* Order Number */}
                   <div className="sm:col-span-2">
                     <label className="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">
-                      رقم الطلب / الفاتورة (اختياري)
+                      {t('feedback.form.orderNumberLabel')}
                     </label>
                     <input
                       type="text"
-                      placeholder="مثال: #MR-1082"
+                      placeholder={t('feedback.form.orderNumberPlaceholder')}
+                      dir="ltr"
                       {...register('orderNumber')}
                       className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 text-brand-dark font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors"
                     />
@@ -418,12 +433,12 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
                 {/* Message */}
                 <div>
                   <label className="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">
-                    تفاصيل التجربة والملاحظات *
+                    {t('feedback.form.messageLabel')}
                   </label>
                   <textarea
                     rows="4"
-                    placeholder="اكتب انطباعك أو أي ملاحظات ترغب في مشاركتها معنا لتطوير الخدمة..."
-                    {...register('message', { required: 'يرجى كتابة الملاحظات' })}
+                    placeholder={t('feedback.form.messagePlaceholder')}
+                    {...register('message', { required: t('feedback.form.messageRequired') })}
                     className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
                       errors.message ? 'border-red-500' : 'border-gray-300'
                     }`}
@@ -436,14 +451,14 @@ export const FeedbackForm = ({ onFeedbackSubmit }) => {
                   <button
                     type="button"
                     onClick={handlePrevStep}
-                    className="inline-flex items-center space-x-2 text-sm font-bold text-gray-600 hover:text-brand-dark cursor-pointer"
+                    className="inline-flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-brand-dark cursor-pointer"
                   >
-                    <FiArrowLeft className="w-4 h-4" />
-                    <span>السابق</span>
+                    {isAr ? <FiArrowRight className="w-4 h-4" /> : <FiArrowLeft className="w-4 h-4" />}
+                    <span>{t('feedback.form.prevStep')}</span>
                   </button>
 
                   <Button type="submit" variant="primary" size="lg" icon={FiSend}>
-                    إرسال التقييم
+                    {t('feedback.form.submitReview')}
                   </Button>
                 </div>
               </motion.div>

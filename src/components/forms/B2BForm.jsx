@@ -4,8 +4,10 @@ import { motion } from 'framer-motion';
 import { FiCheckCircle } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { Button } from '../common/Button';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const B2BForm = () => {
+  const { t, isAr } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
@@ -38,10 +40,10 @@ export const B2BForm = () => {
         >
           <FiCheckCircle className="w-16 h-16 text-brand-olive mx-auto mb-4" />
           <h3 className="text-2xl font-bold font-heading text-brand-dark">
-            Partner Request Sent!
+            {t('b2b.form.successTitle')}
           </h3>
-          <p className="mt-2 text-gray-600 max-w-md mx-auto text-sm">
-            Opening WhatsApp to complete your partnership inquiry.
+          <p className="mt-2 text-gray-600 max-w-md mx-auto text-sm leading-relaxed">
+            {t('b2b.form.successDesc')}
           </p>
         </motion.div>
       ) : (
@@ -51,12 +53,12 @@ export const B2BForm = () => {
             {/* Name */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Name *
+                {t('b2b.form.nameLabel')}
               </label>
               <input
                 type="text"
-                placeholder="Your Name"
-                {...register('name', { required: 'Name is required' })}
+                placeholder={t('b2b.form.namePlaceholder')}
+                {...register('name', { required: t('b2b.form.nameRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
                   errors.name ? 'border-red-500' : 'border-gray-200'
                 }`}
@@ -67,12 +69,13 @@ export const B2BForm = () => {
             {/* Email */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Email *
+                {t('b2b.form.emailLabel')}
               </label>
               <input
                 type="email"
-                placeholder="email@example.com"
-                {...register('email', { required: 'Email is required', pattern: /^\S+@\S+$/i })}
+                placeholder={t('b2b.form.emailPlaceholder')}
+                dir="ltr"
+                {...register('email', { required: t('b2b.form.emailRequired'), pattern: /^\S+@\S+$/i })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
                   errors.email ? 'border-red-500' : 'border-gray-200'
                 }`}
@@ -83,12 +86,13 @@ export const B2BForm = () => {
             {/* Phone */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Phone *
+                {t('b2b.form.phoneLabel')}
               </label>
               <input
                 type="tel"
-                placeholder="01118822595"
-                {...register('phone', { required: 'Phone number is required' })}
+                placeholder={t('b2b.form.phonePlaceholder')}
+                dir="ltr"
+                {...register('phone', { required: t('b2b.form.phoneRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
                   errors.phone ? 'border-red-500' : 'border-gray-200'
                 }`}
@@ -99,12 +103,12 @@ export const B2BForm = () => {
             {/* Place */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Place / Business Location *
+                {t('b2b.form.placeLabel')}
               </label>
               <input
                 type="text"
-                placeholder="e.g. Cafe Name / Location"
-                {...register('place', { required: 'Place is required' })}
+                placeholder={t('b2b.form.placePlaceholder')}
+                {...register('place', { required: t('b2b.form.placeRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
                   errors.place ? 'border-red-500' : 'border-gray-200'
                 }`}
@@ -117,21 +121,23 @@ export const B2BForm = () => {
           {/* Notes */}
           <div>
             <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-              Notes
+              {t('b2b.form.notesLabel')}
             </label>
             <textarea
               rows="4"
-              placeholder="Tell us about your business requirement..."
+              placeholder={t('b2b.form.notesPlaceholder')}
               {...register('notes')}
               className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors"
             ></textarea>
           </div>
 
           <Button type="submit" variant="primary" size="lg" fullWidth icon={FaWhatsapp}>
-            Become a Partner via WhatsApp
+            {t('b2b.form.submitBtn')}
           </Button>
         </form>
       )}
     </div>
   );
 };
+
+export default B2BForm;

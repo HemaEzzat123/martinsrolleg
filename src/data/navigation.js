@@ -1,12 +1,12 @@
 export const NAV_LINKS = [
-  { name: 'Home', path: '/' },
-  { name: 'Menu', path: '/menu' },
-  { name: 'Catering', path: '/catering' },
-  { name: 'Franchise', path: '/franchise' },
-  { name: 'B2B', path: '/b2b' },
-  { name: 'Feedback', path: '/feedback' },
-  { name: 'Careers', path: '/careers' },
-  { name: 'Contact', path: '/contact' },
+  { key: 'home', id: 'home', name: 'Home', nameEn: 'Home', nameAr: 'الرئيسية', path: '/#home' },
+  { key: 'menu', id: 'menu', name: 'Menu', nameEn: 'Menu', nameAr: 'المنيو', path: '/#menu' },
+  { key: 'catering', id: 'catering', name: 'Catering', nameEn: 'Catering', nameAr: 'الحفلات', path: '/#catering' },
+  { key: 'franchise', id: 'franchise', name: 'Franchise', nameEn: 'Franchise', nameAr: 'الامتياز التجاري', path: '/#franchise' },
+  { key: 'b2b', id: 'b2b', name: 'B2B', nameEn: 'B2B', nameAr: 'للشركات', path: '/#b2b' },
+  { key: 'feedback', id: 'feedback', name: 'Feedback', nameEn: 'Feedback', nameAr: 'تقييمك', path: '/#feedback' },
+  { key: 'careers', id: 'careers', name: 'Careers', nameEn: 'Careers', nameAr: 'وظائف', path: '/#careers' },
+  { key: 'contact', id: 'contact', name: 'Contact', nameEn: 'Contact', nameAr: 'تواصل معنا', path: '/#contact' },
 ];
 
 export const SOCIAL_LINKS = [

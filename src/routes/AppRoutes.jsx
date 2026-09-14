@@ -1,26 +1,21 @@
 import React, { lazy, Suspense, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { LoadingScreen } from '../components/common/LoadingScreen';
 
-// Lazy loaded page components
+// Main single-page & legal page components
 const Home = lazy(() => import('../pages/Home'));
-const Menu = lazy(() => import('../pages/Menu'));
-const Catering = lazy(() => import('../pages/Catering'));
-const Franchise = lazy(() => import('../pages/Franchise'));
-const B2B = lazy(() => import('../pages/B2B'));
-const Feedback = lazy(() => import('../pages/Feedback'));
-const Careers = lazy(() => import('../pages/Careers'));
-const Contact = lazy(() => import('../pages/Contact'));
 const PrivacyPolicy = lazy(() => import('../pages/PrivacyPolicy'));
 const RefundPolicy = lazy(() => import('../pages/RefundPolicy'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 
-// Automatically scroll to top of window on page navigation
+// Automatically scroll to top of window on page navigation (only when no hash is present)
 const ScrollToTopOnNavigate = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (!hash) {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
   return null;
 };
 
@@ -30,14 +25,20 @@ export const AppRoutes = () => {
       <ScrollToTopOnNavigate />
       <Suspense fallback={<LoadingScreen />}>
         <Routes>
+          {/* Main Continuous Single-Page */}
           <Route path="/" element={<Home />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/catering" element={<Catering />} />
-          <Route path="/franchise" element={<Franchise />} />
-          <Route path="/b2b" element={<B2B />} />
-          <Route path="/feedback" element={<Feedback />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/contact" element={<Contact />} />
+
+          {/* Legacy & Direct Section Redirections */}
+          <Route path="/menu" element={<Navigate to="/#menu" replace />} />
+          <Route path="/about" element={<Navigate to="/#about" replace />} />
+          <Route path="/catering" element={<Navigate to="/#catering" replace />} />
+          <Route path="/franchise" element={<Navigate to="/#franchise" replace />} />
+          <Route path="/b2b" element={<Navigate to="/#b2b" replace />} />
+          <Route path="/feedback" element={<Navigate to="/#feedback" replace />} />
+          <Route path="/careers" element={<Navigate to="/#careers" replace />} />
+          <Route path="/contact" element={<Navigate to="/#contact" replace />} />
+
+          {/* Standalone Legal & Fallback Pages */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="*" element={<NotFound />} />
@@ -46,3 +47,5 @@ export const AppRoutes = () => {
     </>
   );
 };
+
+export default AppRoutes;

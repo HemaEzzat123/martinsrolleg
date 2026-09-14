@@ -1,13 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FiShoppingBag, FiArrowRight, FiCheck, FiStar } from "react-icons/fi";
+import { FiShoppingBag, FiCheck } from "react-icons/fi";
 import { Button } from "../common/Button";
-import { AnimatedCounter } from "../common/AnimatedCounter";
+import { useLanguage } from "../../context/LanguageContext";
 
 export const ORDER_NOW_URL =
   "https://martins-roll-eg.fodista.com/apps/online/18p0hie137?category=BREAKFAST";
 
 export const Hero = () => {
+  const { t, isAr } = useLanguage();
+
   const handleOrder = () => {
     window.open(ORDER_NOW_URL, "_blank");
   };
@@ -20,39 +22,39 @@ export const Hero = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Text Content */}
+          {/* Text Content */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: isAr ? 30 : -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-6 text-left"
+            className="lg:col-span-6 text-start"
           >
             {/* Top Pill Badge */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-brand-olive/10 text-brand-olive border border-brand-olive/20 mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-olive/10 text-brand-olive border border-brand-olive/20 mb-6"
             >
               <span className="w-2 h-2 rounded-full bg-brand-olive animate-ping" />
               <span className="text-xs font-bold uppercase tracking-wider">
-                Baked Fresh Every Hour
+                {t('hero.freshBadge')}
               </span>
             </motion.div>
 
             {/* Main Heading */}
-            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-extrabold font-heading text-brand-dark tracking-tight leading-[1.1]">
-              Luxury Handmade <br />
+            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-extrabold font-heading text-brand-dark tracking-tight leading-[1.15]">
+              {t('hero.titleLine1')} <br />
               <span className="text-brand-olive italic font-normal">
-                Every bite, a journey.
+                {t('hero.titleLine2')}
               </span>
             </h1>
 
             {/* Subtitle */}
             <p className="mt-6 text-lg sm:text-xl text-gray-700 font-medium leading-relaxed max-w-lg">
-              Premium Bakery <br />
+              {t('hero.subtitlePrefix')} <br />
               <span className="text-brand-olive font-bold">
-                Croissant • Desserts • Specialty Coffee
+                {t('hero.subtitleCategories')}
               </span>
             </p>
 
@@ -64,14 +66,14 @@ export const Hero = () => {
                 icon={FiShoppingBag}
                 onClick={handleOrder}
               >
-                Order Now
+                {t('hero.orderBtn')}
               </Button>
             </div>
 
             {/* Handwritten Callout */}
-            <div className="mt-8 mb-3 flex items-center space-x-2">
+            <div className="mt-8 mb-3 flex items-center gap-2">
               <svg
-                className="w-12 h-10 text-brand-olive stroke-current flex-shrink-0 -rotate-6"
+                className={`w-12 h-10 text-brand-olive stroke-current flex-shrink-0 ${isAr ? 'rotate-6 scale-x-[-1]' : '-rotate-6'}`}
                 viewBox="0 0 60 40"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -89,16 +91,15 @@ export const Hero = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-              <div className="font-script text-2xl sm:text-3xl text-brand-olive leading-tight select-none">
-                Freshly baked <br />
-                just for you
+              <div className="font-script text-2xl sm:text-3xl text-brand-olive leading-tight select-none whitespace-pre-line">
+                {t('hero.handwrittenNote')}
               </div>
             </div>
 
             {/* Trust Badges Bar */}
             <div className="mt-4 pt-6 border-t border-gray-300/60 flex flex-wrap md:flex-nowrap items-center justify-between gap-6 md:gap-2">
               {/* 1. Google Reviews */}
-              <div className="flex items-center space-x-3.5 pr-2 md:pr-5 lg:pr-6 md:border-r border-gray-300/70 flex-1 min-w-[180px] md:min-w-0">
+              <div className="flex items-center gap-3.5 pe-2 md:pe-5 lg:pe-6 border-e border-gray-300/70 flex-1 min-w-[180px] md:min-w-0">
                 <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#E5ECCF] flex items-center justify-center flex-shrink-0">
                   <svg
                     className="w-7 h-7 text-[#4B5E27]"
@@ -117,9 +118,9 @@ export const Hero = () => {
                     4.5
                   </span>
                   <span className="text-xs sm:text-sm font-semibold text-gray-800 mt-0.5">
-                    Google Reviews
+                    {t('hero.reviewsTitle')}
                   </span>
-                  <div className="flex items-center space-x-0.5 mt-1">
+                  <div className="flex items-center gap-0.5 mt-1" dir="ltr">
                     {[...Array(5)].map((_, i) => (
                       <svg
                         key={i}
@@ -134,7 +135,7 @@ export const Hero = () => {
               </div>
 
               {/* 2. Fast Delivery */}
-              <div className="flex items-center space-x-3.5 px-0 md:px-3 lg:px-5 md:border-r border-gray-300/70 flex-1 min-w-[180px] md:min-w-0">
+              <div className="flex items-center gap-3.5 px-0 md:px-3 lg:px-5 border-e border-gray-300/70 flex-1 min-w-[180px] md:min-w-0">
                 <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#E5ECCF] flex items-center justify-center flex-shrink-0">
                   <svg
                     className="w-7 h-7 text-[#4B5E27]"
@@ -154,17 +155,16 @@ export const Hero = () => {
                 </div>
                 <div className="flex flex-col justify-center">
                   <span className="text-base sm:text-lg font-bold text-brand-dark leading-tight">
-                    Fast Delivery
+                    {t('hero.deliveryTitle')}
                   </span>
-                  <span className="text-xs sm:text-sm text-gray-600 mt-1 leading-snug">
-                    At your doorstep
-                    <br className="hidden sm:inline" /> in no time
+                  <span className="text-xs sm:text-sm text-gray-600 mt-1 leading-snug whitespace-pre-line">
+                    {t('hero.deliveryDesc')}
                   </span>
                 </div>
               </div>
 
               {/* 3. Fresh Daily */}
-              <div className="flex items-center space-x-3.5 pl-0 md:pl-3 lg:pl-5 flex-1 min-w-[180px] md:min-w-0">
+              <div className="flex items-center gap-3.5 ps-0 md:ps-3 lg:ps-5 flex-1 min-w-[180px] md:min-w-0">
                 <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#E5ECCF] flex items-center justify-center flex-shrink-0">
                   <svg
                     className="w-7 h-7 text-[#4B5E27]"
@@ -182,11 +182,10 @@ export const Hero = () => {
                 </div>
                 <div className="flex flex-col justify-center">
                   <span className="text-base sm:text-lg font-bold text-brand-dark leading-tight">
-                    Fresh Daily
+                    {t('hero.freshTitle')}
                   </span>
-                  <span className="text-xs sm:text-sm text-gray-600 mt-1 leading-snug">
-                    Made with premium
-                    <br className="hidden sm:inline" /> ingredients
+                  <span className="text-xs sm:text-sm text-gray-600 mt-1 leading-snug whitespace-pre-line">
+                    {t('hero.freshDesc')}
                   </span>
                 </div>
               </div>
@@ -220,17 +219,17 @@ export const Hero = () => {
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  className="absolute top-6 left-6 glass-card px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-3"
+                  className="absolute top-6 start-6 glass-card px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3"
                 >
-                  <div className="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold text-lg">
+                  <div className="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold text-lg shrink-0">
                     ✨
                   </div>
                   <div>
                     <p className="text-xs font-bold text-brand-dark">
-                      100% Organic
+                      {t('hero.organicBadgeTitle')}
                     </p>
                     <p className="text-[10px] text-gray-500">
-                      Korintje Cinnamon
+                      {t('hero.organicBadgeDesc')}
                     </p>
                   </div>
                 </motion.div>
@@ -244,17 +243,17 @@ export const Hero = () => {
                     ease: "easeInOut",
                     delay: 1,
                   }}
-                  className="absolute bottom-6 right-6 glass-card px-5 py-3 rounded-2xl shadow-xl flex items-center space-x-3"
+                  className="absolute bottom-6 end-6 glass-card px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3"
                 >
-                  <div className="w-10 h-10 rounded-full bg-brand-olive text-white flex items-center justify-center font-bold">
+                  <div className="w-10 h-10 rounded-full bg-brand-olive text-white flex items-center justify-center font-bold shrink-0">
                     <FiCheck className="w-5 h-5" />
                   </div>
                   <div>
                     <p className="text-xs font-bold text-brand-dark">
-                      Warm Fresh Glaze
+                      {t('hero.glazeBadgeTitle')}
                     </p>
                     <p className="text-[10px] text-brand-olive font-semibold">
-                      Served Hot
+                      {t('hero.glazeBadgeDesc')}
                     </p>
                   </div>
                 </motion.div>
@@ -266,3 +265,5 @@ export const Hero = () => {
     </section>
   );
 };
+
+export default Hero;

@@ -2,23 +2,22 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX, FiStar, FiShoppingBag, FiCheck } from 'react-icons/fi';
 import { Button } from '../common/Button';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const ORDER_NOW_URL = 'https://martins-roll-eg.fodista.com/apps/online/18p0hie137?category=BREAKFAST';
 
-export const ProductModal = ({ product, onClose, lang = 'ar' }) => {
+export const ProductModal = ({ product, onClose, lang: propLang }) => {
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  const { lang: contextLang, isAr: contextIsAr, t } = useLanguage();
 
   if (!product) return null;
 
-  const isAr = lang === 'ar';
+  const currentLang = propLang || contextLang;
+  const isAr = currentLang === 'ar';
   const displayName = isAr ? product.nameAr || product.nameEn : product.nameEn;
   const displayDesc = isAr ? product.descriptionAr || product.descriptionEn : product.descriptionEn;
-  const priceDisplay = product.priceRange 
-    ? product.priceRange 
-    : isAr 
-      ? `${(product.price * quantity).toFixed(2)} ج.م` 
-      : `${(product.price * quantity).toFixed(2)} EGP`;
+  const priceDisplay = `${(product.price * quantity).toFixed(2)} ${isAr ? 'ج.م' : 'EGP'}`;
 
   const handleOrder = () => {
     setAdded(true);
@@ -31,7 +30,7 @@ export const ProductModal = ({ product, onClose, lang = 'ar' }) => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" dir={isAr ? 'rtl' : 'ltr'}>
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -41,7 +40,8 @@ export const ProductModal = ({ product, onClose, lang = 'ar' }) => {
           {/* Close button */}
           <button
             onClick={onClose}
-            className={`absolute top-4 ${isAr ? 'left-4' : 'right-4'} z-20 w-10 h-10 rounded-full bg-white/80 text-gray-700 flex items-center justify-center hover:bg-white transition-colors cursor-pointer`}
+            className="absolute top-4 end-4 z-20 w-10 h-10 rounded-full bg-white/80 text-gray-700 flex items-center justify-center hover:bg-white transition-colors cursor-pointer"
+            aria-label="Close"
           >
             <FiX className="w-5 h-5" />
           </button>
@@ -55,23 +55,25 @@ export const ProductModal = ({ product, onClose, lang = 'ar' }) => {
                 className="w-full h-full object-cover"
               />
               {product.isBestSeller && (
-                <span className={`absolute top-4 ${isAr ? 'right-4' : 'left-4'} px-3 py-1 text-xs font-bold bg-brand-gold text-white rounded-full shadow-md`}>
-                  {isAr ? 'الأكثر مبيعاً' : 'Best Seller'}
+                <span className="absolute top-4 start-4 px-3 py-1 text-xs font-bold bg-brand-gold text-white rounded-full shadow-md">
+                  {t('menu.bestSeller', isAr ? 'الأكثر مبيعاً' : 'Best Seller')}
                 </span>
               )}
             </div>
 
             {/* Details section */}
-            <div className="p-6 md:p-8 flex flex-col justify-between text-right">
+            <div className="p-6 md:p-8 flex flex-col justify-between text-start">
               <div>
                 <h2 className="text-2xl font-bold font-heading text-brand-dark">
                   {displayName}
                 </h2>
 
-                <div className="flex items-center space-x-2 mt-2 text-amber-500 font-bold text-sm" dir="ltr">
+                <div className="flex items-center gap-2 mt-2 text-amber-500 font-bold text-sm" dir="ltr">
                   <FiStar className="fill-amber-400" />
                   <span>{product.rating}</span>
-                  <span className="text-gray-400 font-normal">({product.reviewsCount} {isAr ? 'تقييم' : 'reviews'})</span>
+                  <span className="text-gray-400 font-normal">
+                    ({product.reviewsCount} {t('menu.ratingReviews', isAr ? 'تقييم' : 'reviews')})
+                  </span>
                 </div>
 
                 <p className="mt-4 text-sm text-gray-600 leading-relaxed">
@@ -100,8 +102,8 @@ export const ProductModal = ({ product, onClose, lang = 'ar' }) => {
                     </button>
                   </div>
 
-                  <div className={isAr ? 'text-left' : 'text-right'}>
-                    <span className="text-xs text-gray-400 block">{isAr ? 'السعر' : 'Price'}</span>
+                  <div className="text-start">
+                    <span className="text-xs text-gray-400 block">{t('menu.price', isAr ? 'السعر' : 'Price')}</span>
                     <span className="text-xl font-bold font-heading text-brand-dark">
                       {priceDisplay}
                     </span>
@@ -114,7 +116,9 @@ export const ProductModal = ({ product, onClose, lang = 'ar' }) => {
                   icon={added ? FiCheck : FiShoppingBag}
                   onClick={handleOrder}
                 >
-                  {added ? (isAr ? 'جاري فتح صفحة الطلب...' : 'Opening Checkout...') : (isAr ? 'اطلب الآن أونلاين' : 'Proceed to Order')}
+                  {added
+                    ? t('menu.openingCheckout', isAr ? 'جاري فتح صفحة الطلب...' : 'Opening Checkout...')
+                    : t('menu.proceedToOrder', isAr ? 'اطلب الآن أونلاين' : 'Proceed to Order')}
                 </Button>
               </div>
 
@@ -125,3 +129,5 @@ export const ProductModal = ({ product, onClose, lang = 'ar' }) => {
     </AnimatePresence>
   );
 };
+
+export default ProductModal;

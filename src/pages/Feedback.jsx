@@ -5,15 +5,16 @@ import { PageTransition } from '../components/common/PageTransition';
 import { SectionTitle } from '../components/common/SectionTitle';
 import { FeedbackForm } from '../components/forms/FeedbackForm';
 import { TESTIMONIALS } from '../data/testimonials';
+import { useLanguage } from '../context/LanguageContext';
 
-export const Feedback = () => {
+export const Feedback = ({ isSection = false }) => {
+  const { t, isAr } = useLanguage();
   const [reviewsList, setReviewsList] = useState([]);
 
   // Load reviews from localStorage and combine with sample testimonials
   useEffect(() => {
     try {
       const stored = JSON.parse(localStorage.getItem('martins_customer_feedback') || '[]');
-      // Combine stored customer reviews with default testimonials
       const defaultReviews = TESTIMONIALS.map((item) => ({
         id: `default-${item.id}`,
         name: item.name,
@@ -32,9 +33,8 @@ export const Feedback = () => {
     setReviewsList((prev) => [newReview, ...prev]);
   };
 
-  return (
-    <PageTransition>
-      <div className="relative pt-32 pb-20 bg-brand-cream text-brand-dark min-h-screen overflow-hidden">
+  const feedbackContent = (
+    <div className={`relative ${isSection ? 'py-14 md:py-20' : 'pt-32 pb-20 min-h-screen'} bg-brand-cream text-brand-dark overflow-hidden`}>
         
         {/* Background ambient glow shapes matching Home page */}
         <div className="absolute top-1/4 left-10 w-96 h-96 bg-brand-olive/10 rounded-full blur-3xl pointer-events-none" />
@@ -43,9 +43,9 @@ export const Feedback = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           <SectionTitle
-            badge="Guest Reviews & Feedback"
-            title="We'd Love to Hear From You"
-            subtitle="Your feedback helps us continuously deliver warm, hand-crafted bakery perfection."
+            badge={t('feedback.badge')}
+            title={t('feedback.title')}
+            subtitle={t('feedback.subtitle')}
           />
 
           <div className="mt-8">
@@ -55,9 +55,9 @@ export const Feedback = () => {
           {/* Published Feedback & Reviews Showcase Section */}
           <div className="mt-20 pt-12 border-t border-brand-olive/15">
             <SectionTitle
-              badge="Live Guest Feedbacks"
-              title="Recent Customer Reviews"
-              subtitle="See what our guests are saying after visiting Martins Rolleg."
+              badge={t('feedback.liveBadge')}
+              title={t('feedback.liveTitle')}
+              subtitle={t('feedback.liveSubtitle')}
             />
 
             <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -74,14 +74,14 @@ export const Feedback = () => {
                     <div>
                       {/* Top Row: Rating & Date */}
                       <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center space-x-1 text-amber-400">
+                        <div className="flex items-center gap-1 text-amber-400" dir="ltr">
                           {[...Array(review.rating || 5)].map((_, i) => (
                             <FiStar key={i} className="w-4 h-4 fill-amber-400" />
                           ))}
                         </div>
-                        <span className="text-xs text-gray-500 flex items-center space-x-1 font-medium">
+                        <span className="text-xs text-gray-500 flex items-center gap-1 font-medium">
                           <FiClock className="w-3 h-3" />
-                          <span>{review.date || 'Recently'}</span>
+                          <span>{review.date || t('feedback.recently')}</span>
                         </span>
                       </div>
 
@@ -93,8 +93,8 @@ export const Feedback = () => {
 
                     {/* Author & Order Ref */}
                     <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
-                      <div className="flex items-center space-x-2.5">
-                        <div className="w-9 h-9 rounded-full bg-brand-olive/10 text-brand-olive flex items-center justify-center font-bold text-sm">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-9 h-9 rounded-full bg-brand-olive/10 text-brand-olive flex items-center justify-center font-bold text-sm shrink-0">
                           <FiUser className="w-4 h-4" />
                         </div>
                         <div>
@@ -118,8 +118,13 @@ export const Feedback = () => {
 
         </div>
       </div>
-    </PageTransition>
   );
+
+  if (isSection) {
+    return feedbackContent;
+  }
+
+  return <PageTransition>{feedbackContent}</PageTransition>;
 };
 
 export default Feedback;

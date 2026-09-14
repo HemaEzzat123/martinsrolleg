@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Logo } from './Logo';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const LoadingScreen = () => {
+  const { t, isAr } = useLanguage();
+
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#F8EFE3] text-[#16241F] transition-colors duration-300">
       
@@ -32,9 +35,9 @@ export const LoadingScreen = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
-        className="mt-6 text-xs text-[#2C463D] uppercase tracking-[0.2em] font-bold relative z-10"
+        className={`mt-6 text-xs text-[#2C463D] uppercase tracking-[0.2em] font-bold relative z-10 ${isAr ? 'font-arabic tracking-normal text-sm' : ''}`}
       >
-        Baking Fresh Perfection...
+        {t('common.loadingText', 'Baking Fresh Perfection...')}
       </motion.p>
     </div>
   );

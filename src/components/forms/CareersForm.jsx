@@ -5,10 +5,13 @@ import { FiCheckCircle, FiPaperclip } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { BRANCHES } from '../../data/branches';
 import { Button } from '../common/Button';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const CareersForm = () => {
+  const { t, isAr } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const positions = t('careers.positions');
 
   const onSubmit = (data) => {
     // Format WhatsApp message for HR
@@ -35,12 +38,12 @@ export const CareersForm = () => {
   return (
     <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-brand-olive/20 max-w-3xl mx-auto">
       
-      {/* Option 1: CV Attachment Notice Banner */}
-      <div className="mb-6 p-4.5 rounded-2xl bg-[#2C463D]/10 border border-[#2C463D]/25 flex items-start space-x-3 text-left">
+      {/* CV Attachment Notice Banner */}
+      <div className="mb-6 p-4.5 rounded-2xl bg-[#2C463D]/10 border border-[#2C463D]/25 flex items-start gap-3 text-start">
         <FiPaperclip className="w-5 h-5 text-[#2C463D] shrink-0 mt-0.5" />
         <div className="text-xs text-[#16241F] font-medium leading-relaxed">
-          <strong className="block font-bold text-sm text-[#2C463D] mb-0.5">📎 Note for Job Applicants:</strong>
-          After clicking <strong className="text-[#2C463D]">"Apply via WhatsApp"</strong> below, please attach your CV file (PDF/Word) directly in the WhatsApp chat window so HR receives your complete resume.
+          <strong className="block font-bold text-sm text-[#2C463D] mb-0.5">{t('careers.cvNoteTitle')}</strong>
+          {t('careers.cvNoteDesc')}
         </div>
       </div>
 
@@ -52,10 +55,10 @@ export const CareersForm = () => {
         >
           <FiCheckCircle className="w-16 h-16 text-brand-olive mx-auto mb-4" />
           <h3 className="text-2xl font-bold font-heading text-[#16241F]">
-            Application Sent!
+            {t('careers.form.successTitle')}
           </h3>
-          <p className="mt-3 text-[#2D423A] text-sm max-w-md mx-auto font-medium">
-            Thank you for applying. Opening WhatsApp to submit your application details. Don't forget to attach your CV file in the chat!
+          <p className="mt-3 text-[#2D423A] text-sm max-w-md mx-auto font-medium leading-relaxed">
+            {t('careers.form.successDesc')}
           </p>
         </motion.div>
       ) : (
@@ -66,12 +69,12 @@ export const CareersForm = () => {
             {/* Full Name */}
             <div>
               <label className="block text-xs font-bold text-[#16241F] uppercase tracking-wider mb-2">
-                Full Name *
+                {t('careers.form.fullNameLabel')}
               </label>
               <input
                 type="text"
-                placeholder="Your Full Name"
-                {...register('fullName', { required: 'Full name is required' })}
+                placeholder={t('careers.form.fullNamePlaceholder')}
+                {...register('fullName', { required: t('careers.form.fullNameRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-[#F8EFE3]/40 text-[#16241F] font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2C463D] transition-colors ${
                   errors.fullName ? 'border-red-500' : 'border-gray-300'
                 }`}
@@ -82,12 +85,13 @@ export const CareersForm = () => {
             {/* Phone */}
             <div>
               <label className="block text-xs font-bold text-[#16241F] uppercase tracking-wider mb-2">
-                Phone *
+                {t('careers.form.phoneLabel')}
               </label>
               <input
                 type="tel"
-                placeholder="01050611391"
-                {...register('phone', { required: 'Phone number is required' })}
+                placeholder={t('careers.form.phonePlaceholder')}
+                dir="ltr"
+                {...register('phone', { required: t('careers.form.phoneRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-[#F8EFE3]/40 text-[#16241F] font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2C463D] transition-colors ${
                   errors.phone ? 'border-red-500' : 'border-gray-300'
                 }`}
@@ -98,12 +102,13 @@ export const CareersForm = () => {
             {/* Email */}
             <div>
               <label className="block text-xs font-bold text-[#16241F] uppercase tracking-wider mb-2">
-                Email *
+                {t('careers.form.emailLabel')}
               </label>
               <input
                 type="email"
-                placeholder="email@example.com"
-                {...register('email', { required: 'Email is required', pattern: /^\S+@\S+$/i })}
+                placeholder={t('careers.form.emailPlaceholder')}
+                dir="ltr"
+                {...register('email', { required: t('careers.form.emailRequired'), pattern: /^\S+@\S+$/i })}
                 className={`w-full px-4 py-3 rounded-xl border bg-[#F8EFE3]/40 text-[#16241F] font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2C463D] transition-colors ${
                   errors.email ? 'border-red-500' : 'border-gray-300'
                 }`}
@@ -114,21 +119,18 @@ export const CareersForm = () => {
             {/* Position */}
             <div>
               <label className="block text-xs font-bold text-[#16241F] uppercase tracking-wider mb-2">
-                Position *
+                {t('careers.form.positionLabel')}
               </label>
               <select
-                {...register('position', { required: 'Please select a position' })}
+                {...register('position', { required: t('careers.form.positionRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-[#F8EFE3]/40 text-[#16241F] font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2C463D] transition-colors ${
                   errors.position ? 'border-red-500' : 'border-gray-300'
                 }`}
               >
-                <option value="">Select Position</option>
-                <option value="Barista">Barista</option>
-                <option value="Cashier">Cashier</option>
-                <option value="Baker">Baker</option>
-                <option value="Kitchen Staff">Kitchen Staff</option>
-                <option value="Delivery Rider">Delivery Rider</option>
-                <option value="Branch Manager">Branch Manager</option>
+                <option value="">{t('careers.form.selectPosition')}</option>
+                {Array.isArray(positions) && positions.map((pos) => (
+                  <option key={pos} value={pos}>{pos}</option>
+                ))}
               </select>
               {errors.position && <p className="mt-1 text-xs text-red-500 font-semibold">{errors.position.message}</p>}
             </div>
@@ -136,19 +138,19 @@ export const CareersForm = () => {
             {/* Branch */}
             <div>
               <label className="block text-xs font-bold text-[#16241F] uppercase tracking-wider mb-2">
-                Branch *
+                {t('careers.form.branchLabel')}
               </label>
               <select
-                {...register('branch', { required: 'Please select target branch' })}
+                {...register('branch', { required: t('careers.form.branchRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-[#F8EFE3]/40 text-[#16241F] font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2C463D] transition-colors ${
                   errors.branch ? 'border-red-500' : 'border-gray-300'
                 }`}
               >
-                <option value="">Select Branch</option>
+                <option value="">{t('careers.form.selectBranch')}</option>
                 {BRANCHES.map((b) => (
                   <option key={b.id} value={b.name}>{b.name}</option>
                 ))}
-                <option value="Any Branch">Any Branch</option>
+                <option value="Any Branch">{t('careers.form.allBranches')}</option>
               </select>
               {errors.branch && <p className="mt-1 text-xs text-red-500 font-semibold">{errors.branch.message}</p>}
             </div>
@@ -156,12 +158,12 @@ export const CareersForm = () => {
             {/* Years of Experience */}
             <div>
               <label className="block text-xs font-bold text-[#16241F] uppercase tracking-wider mb-2">
-                Years of Experience *
+                {t('careers.form.experienceLabel')}
               </label>
               <input
                 type="text"
-                placeholder="e.g. 2 Years"
-                {...register('experience', { required: 'Years of experience is required' })}
+                placeholder={t('careers.form.experiencePlaceholder')}
+                {...register('experience', { required: t('careers.form.experienceRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-[#F8EFE3]/40 text-[#16241F] font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2C463D] transition-colors ${
                   errors.experience ? 'border-red-500' : 'border-gray-300'
                 }`}
@@ -174,18 +176,18 @@ export const CareersForm = () => {
           {/* Message */}
           <div>
             <label className="block text-xs font-bold text-[#16241F] uppercase tracking-wider mb-2">
-              Cover Note / Message
+              {t('careers.form.messageLabel')}
             </label>
             <textarea
               rows="4"
-              placeholder="Tell us a little about yourself..."
+              placeholder={t('careers.form.messagePlaceholder')}
               {...register('message')}
               className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-[#F8EFE3]/40 text-[#16241F] font-medium text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2C463D] transition-colors"
             ></textarea>
           </div>
 
           <Button type="submit" variant="primary" size="lg" fullWidth icon={FaWhatsapp}>
-            Apply via WhatsApp (Attach CV in Chat)
+            {t('careers.form.submitBtn')}
           </Button>
 
         </form>
@@ -193,3 +195,5 @@ export const CareersForm = () => {
     </div>
   );
 };
+
+export default CareersForm;

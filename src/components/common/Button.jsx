@@ -12,7 +12,7 @@ export const Button = ({
   disabled = false,
   icon: Icon,
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-full transition-all duration-300 shadow-sm focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseStyles = 'inline-flex items-center justify-center gap-2 font-medium rounded-full transition-all duration-300 shadow-sm focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap';
 
   const sizeStyles = {
     sm: 'px-4 py-2 text-sm',
@@ -37,7 +37,7 @@ export const Button = ({
       disabled={disabled}
       className={`${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${fullWidth ? 'w-full' : ''} ${className}`}
     >
-      {Icon && <Icon className="mr-2 text-lg" />}
+      {Icon && <Icon className="text-lg shrink-0" />}
       {children}
     </motion.button>
   );

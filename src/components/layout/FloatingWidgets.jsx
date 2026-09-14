@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiArrowUp, FiShoppingBag } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const ORDER_NOW_URL = 'https://martins-roll-eg.fodista.com/apps/online/18p0hie137?category=BREAKFAST';
 export const WHATSAPP_PHONE = '201118822595';
 
 export const FloatingWidgets = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const { t, isAr } = useLanguage();
 
   useEffect(() => {
     const checkScroll = () => {
@@ -27,7 +29,10 @@ export const FloatingWidgets = () => {
   };
 
   const handleWhatsapp = () => {
-    window.open(`https://wa.me/${WHATSAPP_PHONE}?text=Hello%20Martin's%20Roll!%20I%20would%20like%20to%20inquire%20about%20your%20cinnamon%20rolls.`, '_blank');
+    const defaultText = isAr 
+      ? 'مرحباً مارتنز رول! أود الاستفسار عن المخبوزات ورولات السينابون.'
+      : "Hello Martin's Roll! I would like to inquire about your cinnamon rolls.";
+    window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(defaultText)}`, '_blank');
   };
 
   const handleOrder = () => {
@@ -35,17 +40,17 @@ export const FloatingWidgets = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-3 pointer-events-none">
+    <div className="fixed bottom-6 right-6 rtl:right-auto rtl:left-6 z-50 flex flex-col items-end rtl:items-start space-y-3 pointer-events-none">
       
       {/* Floating Order Button */}
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={handleOrder}
-        className="pointer-events-auto flex items-center space-x-2 bg-brand-gold text-white font-semibold px-4 py-3 rounded-full shadow-lg shadow-brand-gold/30 hover:bg-brand-gold-hover transition-all"
+        className="pointer-events-auto flex items-center gap-2 bg-brand-gold text-white font-semibold px-4 py-3 rounded-full shadow-lg shadow-brand-gold/30 hover:bg-brand-gold-hover transition-all cursor-pointer"
       >
-        <FiShoppingBag className="w-5 h-5" />
-        <span className="text-sm">Order Online</span>
+        <FiShoppingBag className="w-5 h-5 shrink-0" />
+        <span className="text-sm font-bold">{isAr ? 'اطلب أونلاين' : 'Order Online'}</span>
       </motion.button>
 
       {/* Floating WhatsApp Button */}

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
-import { FiCheckCircle, FiSend } from 'react-icons/fi';
+import { FiCheckCircle } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { Button } from '../common/Button';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const CateringForm = () => {
+  const { t, isAr } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
@@ -39,10 +41,10 @@ export const CateringForm = () => {
         >
           <FiCheckCircle className="w-16 h-16 text-brand-olive mx-auto mb-4" />
           <h3 className="text-2xl font-bold font-heading text-brand-dark">
-            Catering Request Received!
+            {t('catering.form.successTitle')}
           </h3>
-          <p className="mt-2 text-gray-600 max-w-md mx-auto text-sm">
-            Thank you for contacting Martin's Roll Catering. Opening WhatsApp to complete your request.
+          <p className="mt-2 text-gray-600 max-w-md mx-auto text-sm leading-relaxed">
+            {t('catering.form.successDesc')}
           </p>
         </motion.div>
       ) : (
@@ -52,12 +54,12 @@ export const CateringForm = () => {
             {/* Name */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Name *
+                {t('catering.form.nameLabel')}
               </label>
               <input
                 type="text"
-                placeholder="Your Name"
-                {...register('name', { required: 'Name is required' })}
+                placeholder={t('catering.form.namePlaceholder')}
+                {...register('name', { required: t('catering.form.nameRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
                   errors.name ? 'border-red-500' : 'border-gray-200'
                 }`}
@@ -68,11 +70,11 @@ export const CateringForm = () => {
             {/* Company */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Company (Optional)
+                {t('catering.form.companyLabel')}
               </label>
               <input
                 type="text"
-                placeholder="Company Name"
+                placeholder={t('catering.form.companyPlaceholder')}
                 {...register('company')}
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors"
               />
@@ -81,12 +83,13 @@ export const CateringForm = () => {
             {/* Phone */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Phone *
+                {t('catering.form.phoneLabel')}
               </label>
               <input
                 type="tel"
-                placeholder="01118822595"
-                {...register('phone', { required: 'Phone number is required' })}
+                placeholder={t('catering.form.phonePlaceholder')}
+                dir="ltr"
+                {...register('phone', { required: t('catering.form.phoneRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
                   errors.phone ? 'border-red-500' : 'border-gray-200'
                 }`}
@@ -97,11 +100,11 @@ export const CateringForm = () => {
             {/* Date */}
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Date *
+                {t('catering.form.dateLabel')}
               </label>
               <input
                 type="date"
-                {...register('date', { required: 'Event date is required' })}
+                {...register('date', { required: t('catering.form.dateRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
                   errors.date ? 'border-red-500' : 'border-gray-200'
                 }`}
@@ -112,13 +115,13 @@ export const CateringForm = () => {
             {/* Number of Guests */}
             <div className="sm:col-span-2">
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                Number of Guests *
+                {t('catering.form.guestsLabel')}
               </label>
               <input
                 type="number"
-                placeholder="e.g. 50"
+                placeholder={t('catering.form.guestsPlaceholder')}
                 min="1"
-                {...register('numberOfGuests', { required: 'Number of guests is required' })}
+                {...register('numberOfGuests', { required: t('catering.form.guestsRequired') })}
                 className={`w-full px-4 py-3 rounded-xl border bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors ${
                   errors.numberOfGuests ? 'border-red-500' : 'border-gray-200'
                 }`}
@@ -131,21 +134,23 @@ export const CateringForm = () => {
           {/* Notes */}
           <div>
             <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
-              Notes
+              {t('catering.form.notesLabel')}
             </label>
             <textarea
               rows="4"
-              placeholder="Any special notes or requirements..."
+              placeholder={t('catering.form.notesPlaceholder')}
               {...register('notes')}
               className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-brand-dark text-sm focus:outline-none focus:ring-2 focus:ring-brand-olive transition-colors"
             ></textarea>
           </div>
 
           <Button type="submit" variant="primary" size="lg" fullWidth icon={FaWhatsapp}>
-            Send Request via WhatsApp
+            {t('catering.form.submitBtn')}
           </Button>
         </form>
       )}
     </div>
   );
 };
+
+export default CateringForm;
