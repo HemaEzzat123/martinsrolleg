@@ -4,7 +4,7 @@ import { FiArrowUp, FiShoppingBag } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { useLanguage } from '../../context/LanguageContext';
 
-export const ORDER_NOW_URL = 'https://martins-roll-eg.fodista.com/apps/online/18p0hie137?category=BREAKFAST';
+export const ORDER_NOW_URL = 'https://martins-roll.billqode.com/';
 export const WHATSAPP_PHONE = '201118822595';
 
 export const FloatingWidgets = () => {

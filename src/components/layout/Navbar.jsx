@@ -9,7 +9,7 @@ import { LanguageSwitcher } from './LanguageSwitcher';
 import { Button } from '../common/Button';
 import { Logo } from '../common/Logo';
 
-export const ORDER_NOW_URL = 'https://martins-roll-eg.fodista.com/apps/online/18p0hie137?category=BREAKFAST';
+export const ORDER_NOW_URL = 'https://martins-roll.billqode.com/';
 
 export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

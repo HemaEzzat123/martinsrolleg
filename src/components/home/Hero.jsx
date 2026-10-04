@@ -5,7 +5,7 @@ import { Button } from "../common/Button";
 import { useLanguage } from "../../context/LanguageContext";
 
 export const ORDER_NOW_URL =
-  "https://martins-roll-eg.fodista.com/apps/online/18p0hie137?category=BREAKFAST";
+  "https://martins-roll.billqode.com/";
 
 export const Hero = () => {
   const { t, isAr } = useLanguage();
